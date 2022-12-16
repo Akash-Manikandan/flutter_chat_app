@@ -33,7 +33,6 @@ class HomePage extends StatelessWidget {
               ),
               const Gap(20),
               TextField(
-                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   filled: true,
                   focusedBorder: OutlineInputBorder(

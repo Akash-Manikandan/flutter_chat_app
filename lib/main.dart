@@ -61,13 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
             fabOpenIcon: const Icon(
               Icons.add,
               color: ThemeColors.mainThemeLight,
+              size: 40,
             ),
             fabCloseIcon: const Icon(
               Icons.close,
               color: Colors.red,
+              size: 40,
             ),
             fabMargin: const EdgeInsets.all(16.0),
-            animationDuration: const Duration(milliseconds: 800),
+            animationDuration: const Duration(milliseconds: 200),
             animationCurve: Curves.easeInOutCirc,
             onDisplayChange: ((isOpen) {
               setState(() {
