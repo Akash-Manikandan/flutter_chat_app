@@ -101,7 +101,11 @@ flutter:
     - family: ProzaLibre
       fonts:
         - asset: assets/fonts/ProzaLibre-Regular.ttf
-   
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 900
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

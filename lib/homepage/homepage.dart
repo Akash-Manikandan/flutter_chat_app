@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
         Expanded(
           child: SingleChildScrollView(
             child: Column(
-              children: const [
+              children: const <Widget>[
                 Gap(10),
                 UserList(
                   id: "Karthi",

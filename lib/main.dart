@@ -42,80 +42,83 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const HomePage(),
-      backgroundColor: !isClicked ? Colors.white : Colors.grey,
-      floatingActionButton: Builder(builder: (context) {
-        return FabCircularMenu(
-          // Cannot be `Alignment.center`
-          alignment: Alignment.bottomRight,
-          ringColor: ThemeColors.mainThemeLight,
-          ringDiameter: 500.0,
-          ringWidth: 150.0,
-          fabSize: 64.0,
-          fabElevation: 8.0,
-          fabIconBorder: const CircleBorder(),
-
-          fabColor: Colors.white,
-          fabOpenIcon: const Icon(
-            Icons.add,
-            color: ThemeColors.mainThemeLight,
-          ),
-          fabCloseIcon: const Icon(
-            Icons.close,
-            color: Colors.red,
-          ),
-          fabMargin: const EdgeInsets.all(16.0),
-          animationDuration: const Duration(milliseconds: 800),
-          animationCurve: Curves.easeInOutCirc,
-          onDisplayChange: ((isOpen) {
-            setState(() {
-              isClicked = !isClicked;
-            });
-          }),
-          children: <Widget>[
-            RawMaterialButton(
-              onPressed: () {},
-              shape: const CircleBorder(),
-              padding: const EdgeInsets.all(24.0),
-              child: const Icon(
-                Icons.people_alt_rounded,
-                color: Colors.white,
-                size: 40,
-              ),
+      body: Opacity(
+        opacity: !isClicked ? 1 : 0.2,
+        child: const HomePage(),
+      ),
+      backgroundColor: Colors.white,
+      floatingActionButton: Builder(
+        builder: (context) {
+          return FabCircularMenu(
+            alignment: Alignment.bottomRight,
+            ringColor: ThemeColors.mainThemeLight,
+            ringDiameter: 500.0,
+            ringWidth: 150.0,
+            fabSize: 64.0,
+            fabElevation: 8.0,
+            fabIconBorder: const CircleBorder(),
+            fabColor: Colors.white,
+            fabOpenIcon: const Icon(
+              Icons.add,
+              color: ThemeColors.mainThemeLight,
             ),
-            RawMaterialButton(
-              onPressed: () {},
-              shape: const CircleBorder(),
-              padding: const EdgeInsets.all(24.0),
-              child: const Icon(
-                Icons.camera_alt_rounded,
-                color: Colors.white,
-                size: 40,
-              ),
+            fabCloseIcon: const Icon(
+              Icons.close,
+              color: Colors.red,
             ),
-            RawMaterialButton(
-              onPressed: () {},
-              shape: const CircleBorder(),
-              padding: const EdgeInsets.all(24.0),
-              child: const Icon(
-                CupertinoIcons.phone_fill,
-                color: Colors.white,
-                size: 40,
+            fabMargin: const EdgeInsets.all(16.0),
+            animationDuration: const Duration(milliseconds: 800),
+            animationCurve: Curves.easeInOutCirc,
+            onDisplayChange: ((isOpen) {
+              setState(() {
+                isClicked = !isClicked;
+              });
+            }),
+            children: <Widget>[
+              RawMaterialButton(
+                onPressed: () {},
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(24.0),
+                child: const Icon(
+                  Icons.people_alt_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
               ),
-            ),
-            RawMaterialButton(
-              onPressed: () {},
-              shape: const CircleBorder(),
-              padding: const EdgeInsets.all(24.0),
-              child: const Icon(
-                CupertinoIcons.person_add_solid,
-                color: Colors.white,
-                size: 40,
+              RawMaterialButton(
+                onPressed: () {},
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(24.0),
+                child: const Icon(
+                  Icons.camera_alt_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
               ),
-            )
-          ],
-        );
-      }),
+              RawMaterialButton(
+                onPressed: () {},
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(24.0),
+                child: const Icon(
+                  CupertinoIcons.phone_fill,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
+              RawMaterialButton(
+                onPressed: () {},
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(24.0),
+                child: const Icon(
+                  CupertinoIcons.person_add_solid,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }

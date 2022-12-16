@@ -24,7 +24,7 @@ class UserList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
             children: <Widget>[
               Container(
@@ -46,16 +46,16 @@ class UserList extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         Text(
                           name,
                           style: const TextStyle(
-                            color: ThemeColors.textColorLight,
+                            color: ThemeColors.mainThemeLight,
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const Gap(5),
@@ -71,24 +71,27 @@ class UserList extends StatelessWidget {
                     const Gap(5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         Text(
                           lastMsg,
                         ),
                         const Gap(5),
                         Container(
-                          width: 25,
+                          height: 20,
+                          width: 30,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: ThemeColors.mainThemeLight,
                           ),
-                          child: Center(
+                          child: Align(
+                            alignment: Alignment.center,
                             child: Text(
                               "$count",
                               style: const TextStyle(
                                 color: ThemeColors.topTextColorLight,
                                 fontSize: 12,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),

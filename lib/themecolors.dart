@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeColors {
-  static const String fontFamily = "ProzaLibre";
+  static const String fontFamily = "Montserrat";
   static const Color mainThemeLight = Color(0xff703770);
   static const Color textColorLight = Color(0xff081C2C);
   static const Color topTextColorLight = Colors.white;
