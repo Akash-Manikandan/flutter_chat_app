@@ -30,14 +30,6 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                "Chats",
-                style: TextStyle(
-                  color: ThemeColors.topTextColorLight,
-                  fontSize: 24,
-                ),
-              ),
-              const Gap(20),
               TextField(
                 decoration: InputDecoration(
                   enabled: !widget.isClicked,
