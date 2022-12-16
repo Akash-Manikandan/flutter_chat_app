@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,24 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const HomePage(),
       ),
       backgroundColor: Colors.white,
+      bottomNavigationBar: CurvedNavigationBar(
+        index: 0,
+        height: 60.0,
+        items: const <Widget>[
+          Icon(Icons.add, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.compare_arrows, size: 30),
+          Icon(Icons.call_split, size: 30),
+          Icon(Icons.perm_identity, size: 30),
+        ],
+        color: Colors.white,
+        buttonBackgroundColor: Colors.white,
+        backgroundColor: ThemeColors.mainThemeLight,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 600),
+        onTap: (index) {},
+        letIndexChange: (index) => true,
+      ),
       floatingActionButton: Builder(
         builder: (context) {
           return FabCircularMenu(
