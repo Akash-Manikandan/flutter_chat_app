@@ -90,6 +90,8 @@ class UserList extends StatelessWidget {
                               style: const TextStyle(
                                 color: ThemeColors.topTextColorLight,
                                 fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: "SFProDisplay",
                               ),
                               textAlign: TextAlign.center,
                             ),

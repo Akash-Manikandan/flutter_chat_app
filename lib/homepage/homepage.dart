@@ -5,9 +5,15 @@ import 'package:flutter_chat_app/homepage/userlist.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.isClicked});
+  final bool isClicked;
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -80,6 +86,11 @@ class HomePage extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
+            physics: ScrollPhysics(
+              parent: !widget.isClicked
+                  ? const AlwaysScrollableScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
+            ),
             child: Column(
               children: const <Widget>[
                 Gap(10),
@@ -179,7 +190,7 @@ class HomePage extends StatelessWidget {
                   name: "Aishwarya",
                   lastMsg: "Hello, Good Morning",
                   time: "11:47 PM",
-                  count: 4,
+                  count: 1,
                 ),
                 UserList(
                   id: "Akash",

@@ -51,7 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         child: Opacity(
           opacity: !isClicked ? 1 : 0.3,
-          child: const HomePage(),
+          child: HomePage(
+            isClicked: isClicked,
+          ),
         ),
       ),
       backgroundColor: Colors.white,
@@ -66,11 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
             fabSize: 64.0,
             fabElevation: 8.0,
             fabIconBorder: const CircleBorder(),
-            fabColor: Colors.white,
+            fabColor: ThemeColors.mainThemeLight,
             fabOpenIcon: const Center(
               child: Icon(
                 Icons.add,
-                color: ThemeColors.mainThemeLight,
+                color: ThemeColors.topTextColorLight,
                 size: 40,
               ),
             ),
@@ -96,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(24.0),
                 child: const Icon(
                   Icons.people_alt_rounded,
-                  color: Colors.white,
+                  color: ThemeColors.topTextColorLight,
                   size: 40,
                 ),
               ),
@@ -106,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(24.0),
                 child: const Icon(
                   Icons.camera_alt_rounded,
-                  color: Colors.white,
+                  color: ThemeColors.topTextColorLight,
                   size: 40,
                 ),
               ),
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(24.0),
                 child: const Icon(
                   CupertinoIcons.phone_fill,
-                  color: Colors.white,
+                  color: ThemeColors.topTextColorLight,
                   size: 40,
                 ),
               ),
@@ -126,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(24.0),
                 child: const Icon(
                   CupertinoIcons.person_add_solid,
-                  color: Colors.white,
+                  color: ThemeColors.topTextColorLight,
                   size: 40,
                 ),
               )
