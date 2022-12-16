@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
               const Gap(20),
               TextField(
                 decoration: InputDecoration(
+                  enabled: !widget.isClicked,
                   filled: true,
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
