@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,35 +39,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isClicked = false;
+  final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Opacity(
-        opacity: !isClicked ? 1 : 0.2,
-        child: const HomePage(),
+      body: GestureDetector(
+        onTap: () {
+          isClicked ? fabKey.currentState?.close() : null;
+        },
+        child: Opacity(
+          opacity: !isClicked ? 1 : 0.3,
+          child: const HomePage(),
+        ),
       ),
       backgroundColor: Colors.white,
-      bottomNavigationBar: CurvedNavigationBar(
-        index: 0,
-        height: 60.0,
-        items: const <Widget>[
-          Icon(Icons.add, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
-          Icon(Icons.call_split, size: 30),
-          Icon(Icons.perm_identity, size: 30),
-        ],
-        color: Colors.white,
-        buttonBackgroundColor: Colors.white,
-        backgroundColor: ThemeColors.mainThemeLight,
-        animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 600),
-        onTap: (index) {},
-        letIndexChange: (index) => true,
-      ),
       floatingActionButton: Builder(
         builder: (context) {
           return FabCircularMenu(
+            key: fabKey,
             alignment: Alignment.bottomRight,
             ringColor: ThemeColors.mainThemeLight,
             ringDiameter: 500.0,
@@ -77,15 +67,19 @@ class _MyHomePageState extends State<MyHomePage> {
             fabElevation: 8.0,
             fabIconBorder: const CircleBorder(),
             fabColor: Colors.white,
-            fabOpenIcon: const Icon(
-              Icons.add,
-              color: ThemeColors.mainThemeLight,
-              size: 40,
+            fabOpenIcon: const Center(
+              child: Icon(
+                Icons.add,
+                color: ThemeColors.mainThemeLight,
+                size: 40,
+              ),
             ),
-            fabCloseIcon: const Icon(
-              Icons.close,
-              color: Colors.red,
-              size: 40,
+            fabCloseIcon: const Center(
+              child: Icon(
+                Icons.close,
+                color: Colors.red,
+                size: 40,
+              ),
             ),
             fabMargin: const EdgeInsets.all(16.0),
             animationDuration: const Duration(milliseconds: 200),
