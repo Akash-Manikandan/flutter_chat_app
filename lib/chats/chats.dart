@@ -5,10 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 
-class Charts extends StatelessWidget {
-  Charts({super.key, required this.name, required this.id});
+class Charts extends StatefulWidget {
+  const Charts({super.key, required this.name, required this.id});
   final String name;
   final String id;
+
+  @override
+  State<Charts> createState() => _ChartsState();
+}
+
+class _ChartsState extends State<Charts> {
   final List<Map<String, dynamic>> userList = [
     {
       "id": "Karthi",
@@ -161,7 +167,9 @@ class Charts extends StatelessWidget {
       "count": 4,
     }
   ];
+
   final myId = "Akash";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -188,13 +196,13 @@ class Charts extends StatelessWidget {
                 radius: 22,
                 backgroundColor: Colors.transparent,
                 child: SvgPicture.string(
-                  Jdenticon.toSvg(id),
+                  Jdenticon.toSvg(widget.id),
                   fit: BoxFit.contain,
                 ),
               ),
             ),
             const Gap(12),
-            Text(name),
+            Text(widget.name),
           ],
         ),
         actions: const <Widget>[
@@ -215,132 +223,193 @@ class Charts extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Column(
-            children: [
-              ...userList
-                  .map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: (e["id"] == myId)
-                            ? MainAxisAlignment.end
-                            : MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          (e["id"] != myId)
-                              ? Container(
-                                  padding: const EdgeInsets.all(3),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: ThemeColors.profileImageBg,
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.transparent,
-                                    child: SvgPicture.string(
-                                      Jdenticon.toSvg(e["id"]),
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox(),
-                          const Gap(10),
-                          (e["id"] != myId)
-                              ? Flexible(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: size.width * 0.1,
-                                        ),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          decoration: const BoxDecoration(
-                                            color: ThemeColors.oppositeTextBox,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            e["message"],
-                                            style: const TextStyle(
-                                              color: ThemeColors.mainThemeLight,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          e["time"],
-                                          style: const TextStyle(
-                                            color: ThemeColors.mainThemeLight,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              : Flexible(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: size.width * 0.1,
-                                        ),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: const BoxDecoration(
-                                            color: ThemeColors.mainThemeLight,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                              bottomLeft: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            e["message"],
-                                            textAlign: TextAlign.end,
-                                            style: const TextStyle(
-                                              color:
-                                                  ThemeColors.oppositeTextBox,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          e["time"],
-                                          style: const TextStyle(
-                                            color: ThemeColors.mainThemeLight,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                        ],
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ],
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(10),
+        color: Colors.transparent,
+        child: TextField(
+          decoration: InputDecoration(
+            filled: true,
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: ThemeColors.lighterShadeTextLight,
+              ),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: ThemeColors.lighterShadeTextLight,
+              ),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            fillColor: ThemeColors.mainThemeLight,
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: ThemeColors.lighterShadeTextLight,
+              ),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            hintText: 'Write a message ...',
+            hintStyle: const TextStyle(
+              color: ThemeColors.lighterShadeTextLight,
+            ),
+            prefixIcon: const Padding(
+              padding: EdgeInsets.only(
+                left: 18.0,
+                right: 10.0,
+              ),
+              child: Icon(
+                CupertinoIcons.link,
+                color: ThemeColors.topTextColorLight,
+              ),
+            ),
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(
+                left: 10.0,
+                right: 6.0,
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(9),
+                decoration: const BoxDecoration(
+                  color: ThemeColors.topTextColorLight,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.send,
+                  color: ThemeColors.mainThemeLight,
+                  size: 26,
+                ),
+              ),
+            ),
           ),
+          cursorColor: ThemeColors.topTextColorLight,
+          style: const TextStyle(
+            color: ThemeColors.topTextColorLight,
+            fontSize: 16,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ListView(
+          children: [
+            ...userList
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: (e["id"] == myId)
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        (e["id"] != myId)
+                            ? Container(
+                                padding: const EdgeInsets.all(3),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ThemeColors.profileImageBg,
+                                ),
+                                child: CircleAvatar(
+                                  radius: 18,
+                                  backgroundColor: Colors.transparent,
+                                  child: SvgPicture.string(
+                                    Jdenticon.toSvg(e["id"]),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        const Gap(10),
+                        (e["id"] != myId)
+                            ? Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: size.width * 0.1,
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: const BoxDecoration(
+                                          color: ThemeColors.oppositeTextBox,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                            bottomRight: Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: SelectableText(
+                                          e["message"],
+                                          style: const TextStyle(
+                                            color: ThemeColors.mainThemeLight,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text(
+                                        e["time"],
+                                        style: const TextStyle(
+                                          color: ThemeColors.mainThemeLight,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: size.width * 0.1,
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: const BoxDecoration(
+                                          color: ThemeColors.mainThemeLight,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: SelectableText(
+                                          e["message"],
+                                          textAlign: TextAlign.end,
+                                          style: const TextStyle(
+                                            color: ThemeColors.oppositeTextBox,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text(
+                                        e["time"],
+                                        style: const TextStyle(
+                                          color: ThemeColors.mainThemeLight,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                      ],
+                    ),
+                  ),
+                )
+                .toList(),
+          ],
         ),
       ),
     );
