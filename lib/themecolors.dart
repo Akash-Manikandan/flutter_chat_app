@@ -6,9 +6,12 @@ class ThemeColors {
   static const Color topTextColorLight = Color(0xffedabef);
   static const Color lighterShadeTextLight = Color(0xaaedabef);
   static const Color profileImageBg = Color(0xffebf9ff);
+  static const Color profileImageBgChatPage = Color.fromARGB(170, 47, 58, 63);
   static Color imageBgLight = Colors.grey.shade200.withOpacity(0.5);
+  static const Color oppositeTextBox = Colors.white;
+  static const Color myTextBox = Colors.white;
 }
-//0xffefba93  0xffedabef
+//0xffefba93  0xffedabef   Color.fromARGB(170, 47, 58, 63);
 
 
 //!Good

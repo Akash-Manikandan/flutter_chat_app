@@ -43,30 +43,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(
-            left: 10.0,
-            top: 8.0,
-          ),
-          child: Text(
-            "Chats",
-            style: TextStyle(
-              color: ThemeColors.topTextColorLight,
-              fontSize: 24,
-            ),
-          ),
-        ),
       ),
       body: GestureDetector(
-        onTap: () {
-          isClicked ? fabKey.currentState?.close() : null;
-        },
+        onTap: isClicked
+            ? () {
+                fabKey.currentState?.close();
+              }
+            : null,
         child: Opacity(
-          opacity: !isClicked ? 1 : 0.3,
+          opacity: !isClicked ? 1 : 0.5,
           child: HomePage(
             isClicked: isClicked,
           ),

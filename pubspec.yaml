@@ -106,7 +106,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
         - asset: assets/fonts/Montserrat-Bold.ttf
-          weight: 900
+          weight: 600
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
