@@ -1,14 +1,46 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/chats/chats.dart';
+import 'package:flutter_chat_app/homepage/userlist.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:readmore/readmore.dart';
 
-class Description extends StatelessWidget {
+class Description extends StatefulWidget {
   const Description({super.key, required this.id});
   final String id;
+
+  @override
+  State<Description> createState() => _DescriptionState();
+}
+
+class _DescriptionState extends State<Description> {
+  List<Map<String, dynamic>> userList = [
+    {
+      "id": "Karthi",
+      "name": "Karthi",
+      "message": "Hello, Good Morning",
+      "time": "11:47 PM",
+      "count": 4,
+    },
+    {
+      "id": "Aishwarya",
+      "name": "Aishwarya",
+      "message": "Hello, Morning",
+      "time": "11:47 PM",
+      "count": 7,
+    },
+    {
+      "id": "Akash",
+      "name": "Akash",
+      "message": "Bye",
+      "time": "11:47 PM",
+      "count": 4,
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -75,47 +107,106 @@ class Description extends StatelessWidget {
             elevation: 0,
             expandedHeight: size.height * 0.4,
             flexibleSpace: FlexibleSpaceBar(
-              collapseMode: CollapseMode.parallax,
-              title: Text(
-                id,
-                style: const TextStyle(
-                  color: ThemeColors.mainThemeLight,
-                ),
-              ),
-              background: Container(
-                width: size.width,
-                height: size.height * 0.4,
-                color: ThemeColors.profileImageBgLightestVersion,
-                child: Hero(
-                  tag: "Profile",
-                  child: SvgPicture.string(
-                    Jdenticon.toSvg(id),
+              background: Stack(
+                children: <Widget>[
+                  Container(
                     width: size.width,
                     height: size.height * 0.4,
+                    color: ThemeColors.profileImageBgLightestVersion,
+                    child: Hero(
+                      tag: widget.id,
+                      child: SvgPicture.string(
+                        Jdenticon.toSvg(widget.id),
+                        width: size.width,
+                        height: size.height * 0.4,
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    bottom: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18.0,
+                      ),
+                      child: Text(
+                        widget.id,
+                        style: const TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [
+              <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
-                    children: [
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const <Widget>[
                       Text(
                         "Description",
                         style: TextStyle(
                           fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
+                      Gap(20),
                       ReadMoreText(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit",
+                        trimLines: 3,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: "Read more",
+                        trimExpandedText: "...Show less",
+                        moreStyle: TextStyle(
+                          color: ThemeColors.topTextColorLight,
+                        ),
+                        lessStyle: TextStyle(
+                          color: ThemeColors.topTextColorLight,
+                        ),
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      ...userList
+                          .map(
+                            (each) => MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Charts(
+                                        name: each["name"],
+                                        id: each["id"],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: UserList(
+                                  id: each["id"],
+                                  name: each["name"],
+                                  lastMsg: each["message"],
+                                  time: each["time"],
+                                  count: each["count"],
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList()
                     ],
                   ),
                 )
@@ -127,39 +218,3 @@ class Description extends StatelessWidget {
     );
   }
 }
-
-
-// [
-//           Stack(
-//             children: [
-//               Container(
-//                 width: size.width,
-//                 height: size.height * 0.4,
-//                 color: ThemeColors.profileImageBgLightestVersion,
-//                 child: Hero(
-//                   tag: "Profile",
-//                   child: SvgPicture.string(
-//                     Jdenticon.toSvg(id),
-//                     width: size.width,
-//                     height: size.height * 0.4,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 bottom: 0,
-//                 child: Padding(
-//                   padding: const EdgeInsets.symmetric(
-//                     horizontal: 18.0,
-//                   ),
-//                   child: Text(
-//                     id,
-//                     style: const TextStyle(
-//                       fontSize: 30,
-//                     ),
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//           
-//         ],

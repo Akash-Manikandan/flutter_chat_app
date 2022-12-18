@@ -199,7 +199,7 @@ class _ChartsState extends State<Charts> {
             Row(
               children: [
                 Hero(
-                  tag: "Profile",
+                  tag: widget.id,
                   child: Material(
                     type: MaterialType.transparency,
                     child: InkWell(

@@ -36,9 +36,12 @@ class UserList extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.transparent,
-                  child: SvgPicture.string(
-                    Jdenticon.toSvg(id),
-                    fit: BoxFit.contain,
+                  child: Hero(
+                    tag: id,
+                    child: SvgPicture.string(
+                      Jdenticon.toSvg(id),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
