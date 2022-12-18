@@ -174,7 +174,6 @@ class _ChartsState extends State<Charts> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: ThemeColors.lighterShadeTextLight,
       appBar: AppBar(
         iconTheme: const IconThemeData(
           color: ThemeColors.topTextColorLight,
@@ -268,15 +267,21 @@ class _ChartsState extends State<Charts> {
                 right: 6.0,
               ),
               child: Container(
-                padding: const EdgeInsets.all(9),
+                width: 40,
+                height: 40,
                 decoration: const BoxDecoration(
                   color: ThemeColors.topTextColorLight,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
-                  Icons.send,
-                  color: ThemeColors.mainThemeLight,
-                  size: 26,
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    left: 3.0,
+                  ),
+                  child: Icon(
+                    Icons.send,
+                    color: ThemeColors.mainThemeLight,
+                    size: 28,
+                  ),
                 ),
               ),
             ),
@@ -290,126 +295,145 @@ class _ChartsState extends State<Charts> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(4.0),
-        child: ListView(
-          children: [
-            ...userList
-                .map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: (e["id"] == myId)
-                          ? MainAxisAlignment.end
-                          : MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        (e["id"] != myId)
-                            ? Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ThemeColors.profileImageBg,
-                                ),
-                                child: CircleAvatar(
-                                  radius: 18,
-                                  backgroundColor: Colors.transparent,
-                                  child: SvgPicture.string(
-                                    Jdenticon.toSvg(e["id"]),
-                                    fit: BoxFit.contain,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              ...userList
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: (e["id"] == myId)
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          (e["id"] != myId)
+                              ? Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ThemeColors.profileImageBg,
                                   ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        const Gap(10),
-                        (e["id"] != myId)
-                            ? Flexible(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        right: size.width * 0.1,
-                                      ),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: const BoxDecoration(
-                                          color: ThemeColors.oppositeTextBox,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20),
-                                            bottomRight: Radius.circular(20),
+                                  child: CircleAvatar(
+                                    radius: 18,
+                                    backgroundColor: Colors.transparent,
+                                    child: SvgPicture.string(
+                                      Jdenticon.toSvg(e["id"]),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                          const Gap(10),
+                          (e["id"] != myId)
+                              ? Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: size.width * 0.1,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: const BoxDecoration(
+                                            color: ThemeColors
+                                                .lighterShadeTextLight,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                              bottomRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                e["name"],
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              const Gap(10),
+                                              SelectableText(
+                                                e["message"],
+                                                style: const TextStyle(
+                                                  color: ThemeColors
+                                                      .mainThemeLight,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        child: SelectableText(
-                                          e["message"],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text(
+                                          e["time"],
                                           style: const TextStyle(
                                             color: ThemeColors.mainThemeLight,
-                                            fontSize: 16,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: size.width * 0.1,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: const BoxDecoration(
+                                            color: ThemeColors.mainThemeLight,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                              bottomLeft: Radius.circular(20),
+                                            ),
+                                          ),
+                                          child: SelectableText(
+                                            e["message"],
+                                            textAlign: TextAlign.end,
+                                            style: const TextStyle(
+                                              color:
+                                                  ThemeColors.oppositeTextBox,
+                                              fontSize: 16,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Text(
-                                        e["time"],
-                                        style: const TextStyle(
-                                          color: ThemeColors.mainThemeLight,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : Flexible(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        left: size.width * 0.1,
-                                      ),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: const BoxDecoration(
-                                          color: ThemeColors.mainThemeLight,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20),
-                                            bottomLeft: Radius.circular(20),
-                                          ),
-                                        ),
-                                        child: SelectableText(
-                                          e["message"],
-                                          textAlign: TextAlign.end,
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text(
+                                          e["time"],
                                           style: const TextStyle(
-                                            color: ThemeColors.oppositeTextBox,
-                                            fontSize: 16,
+                                            color: ThemeColors.mainThemeLight,
+                                            fontSize: 12,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Text(
-                                        e["time"],
-                                        style: const TextStyle(
-                                          color: ThemeColors.mainThemeLight,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                      ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                        ],
+                      ),
                     ),
-                  ),
-                )
-                .toList(),
-          ],
+                  )
+                  .toList(),
+            ],
+          ),
         ),
       ),
     );

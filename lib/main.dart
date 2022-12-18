@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? () {
                 fabKey.currentState?.close();
               }
-            : null,
+            : () {},
         child: Opacity(
           opacity: !isClicked ? 1 : 0.5,
           child: HomePage(
