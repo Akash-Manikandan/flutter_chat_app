@@ -70,7 +70,9 @@ class _HomePageState extends State<HomePage> {
               ),
               const Gap(20),
               TextField(
+                textAlign: TextAlign.start,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(20),
                   enabled: !widget.isClicked,
                   filled: true,
                   focusedBorder: OutlineInputBorder(
@@ -95,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                   hintText: 'Search chat, people and more...',
                   hintStyle: const TextStyle(
                     color: ThemeColors.lighterShadeTextLight,
+                    fontSize: 16,
                   ),
                   prefixIcon: const Padding(
                     padding: EdgeInsets.only(
@@ -108,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 cursorColor: ThemeColors.topTextColorLight,
+                cursorHeight: 26,
                 style: const TextStyle(
                   color: ThemeColors.topTextColorLight,
                   fontSize: 16,

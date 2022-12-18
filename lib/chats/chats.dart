@@ -163,7 +163,7 @@ class _ChartsState extends State<Charts> {
       "id": "Akash",
       "name": "Akash",
       "message": "Bye",
-      "time": "11:47 PM",
+      "time": "10:47 PM",
       "count": 4,
     }
   ];
@@ -300,6 +300,8 @@ class _ChartsState extends State<Charts> {
       body: Padding(
         padding: const EdgeInsets.all(4.0),
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          reverse: true,
           child: Column(
             children: <Widget>[
               ...userList
@@ -368,7 +370,9 @@ class _ChartsState extends State<Charts> {
                                                 style: const TextStyle(
                                                   color: ThemeColors
                                                       .mainThemeLight,
-                                                  fontSize: 16,
+                                                  fontSize:
+                                                      ThemeColors.chatFontSize,
+                                                  height: 1.4,
                                                 ),
                                               ),
                                             ],
@@ -413,7 +417,9 @@ class _ChartsState extends State<Charts> {
                                             style: const TextStyle(
                                               color:
                                                   ThemeColors.oppositeTextBox,
-                                              fontSize: 16,
+                                              fontSize:
+                                                  ThemeColors.chatFontSize,
+                                              height: 1.5,
                                             ),
                                           ),
                                         ),
