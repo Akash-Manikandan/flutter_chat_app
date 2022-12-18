@@ -220,6 +220,7 @@ class _HomePageState extends State<HomePage> {
                       (each) => MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: !widget.isClicked
                               ? () {
                                   Navigator.push(
@@ -232,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   );
                                 }
-                              : null,
+                              : () {},
                           child: UserList(
                             id: each["id"],
                             name: each["name"],

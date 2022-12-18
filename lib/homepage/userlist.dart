@@ -20,7 +20,7 @@ class UserList extends StatelessWidget {
   final int count;
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -58,7 +58,6 @@ class UserList extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const Gap(5),
                         Text(
                           time,
                           style: const TextStyle(
@@ -75,7 +74,6 @@ class UserList extends StatelessWidget {
                         Text(
                           lastMsg,
                         ),
-                        const Gap(5),
                         Container(
                           height: 20,
                           width: 30,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/chats/description.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -168,7 +169,7 @@ class _ChartsState extends State<Charts> {
     }
   ];
 
-  final myId = "Akash";
+  final myId = "Aishwarya";
 
   @override
   Widget build(BuildContext context) {
@@ -195,23 +196,47 @@ class _ChartsState extends State<Charts> {
               ),
             ),
             const Gap(5),
-            Container(
-              padding: const EdgeInsets.all(3),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: ThemeColors.profileImageBgChatPage,
-              ),
-              child: CircleAvatar(
-                radius: 22,
-                backgroundColor: Colors.transparent,
-                child: SvgPicture.string(
-                  Jdenticon.toSvg(widget.id),
-                  fit: BoxFit.contain,
+            Row(
+              children: [
+                Hero(
+                  tag: "Profile",
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Description(
+                              id: widget.id,
+                            ),
+                          ),
+                        );
+                      },
+                      radius: 22,
+                      child: Container(
+                        width: 44,
+                        padding: const EdgeInsets.all(3),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ThemeColors.profileImageBgChatPage,
+                        ),
+                        child: CircleAvatar(
+                          radius: 22,
+                          backgroundColor: Colors.transparent,
+                          child: SvgPicture.string(
+                            Jdenticon.toSvg(widget.id),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                const Gap(12),
+                Text(widget.name),
+              ],
             ),
-            const Gap(12),
-            Text(widget.name),
           ],
         ),
         actions: const <Widget>[
@@ -306,153 +331,147 @@ class _ChartsState extends State<Charts> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          reverse: true,
-          child: Column(
-            children: <Widget>[
-              ...userList
-                  .map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: (e["id"] == myId)
-                            ? MainAxisAlignment.end
-                            : MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          (e["id"] != myId)
-                              ? Container(
-                                  padding: const EdgeInsets.all(3),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: ThemeColors.profileImageBg,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        reverse: true,
+        child: Column(
+          children: <Widget>[
+            ...userList
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: (e["id"] == myId)
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        (e["id"] != myId)
+                            ? Container(
+                                padding: const EdgeInsets.all(3),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ThemeColors.profileImageBg,
+                                ),
+                                child: CircleAvatar(
+                                  radius: 18,
+                                  backgroundColor: Colors.transparent,
+                                  child: SvgPicture.string(
+                                    Jdenticon.toSvg(e["id"]),
+                                    fit: BoxFit.contain,
                                   ),
-                                  child: CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.transparent,
-                                    child: SvgPicture.string(
-                                      Jdenticon.toSvg(e["id"]),
-                                      fit: BoxFit.contain,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        const Gap(10),
+                        (e["id"] != myId)
+                            ? Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: size.width * 0.1,
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: const BoxDecoration(
+                                          color:
+                                              ThemeColors.lighterShadeTextLight,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                            bottomRight: Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              e["name"],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            const Gap(10),
+                                            SelectableText(
+                                              e["message"],
+                                              style: const TextStyle(
+                                                color:
+                                                    ThemeColors.mainThemeLight,
+                                                fontSize:
+                                                    ThemeColors.chatFontSize,
+                                                height: 1.4,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                          const Gap(10),
-                          (e["id"] != myId)
-                              ? Flexible(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: size.width * 0.1,
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text(
+                                        e["time"],
+                                        style: const TextStyle(
+                                          color: ThemeColors.mainThemeLight,
+                                          fontSize: 12,
                                         ),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          decoration: const BoxDecoration(
-                                            color: ThemeColors
-                                                .lighterShadeTextLight,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
-                                            ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: size.width * 0.1,
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: const BoxDecoration(
+                                          color: ThemeColors.mainThemeLight,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20),
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                e["name"],
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              const Gap(10),
-                                              SelectableText(
-                                                e["message"],
-                                                style: const TextStyle(
-                                                  color: ThemeColors
-                                                      .mainThemeLight,
-                                                  fontSize:
-                                                      ThemeColors.chatFontSize,
-                                                  height: 1.4,
-                                                ),
-                                              ),
-                                            ],
+                                        ),
+                                        child: SelectableText(
+                                          e["message"],
+                                          textAlign: TextAlign.end,
+                                          style: const TextStyle(
+                                            color: ThemeColors.oppositeTextBox,
+                                            fontSize: ThemeColors.chatFontSize,
+                                            height: 1.5,
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          e["time"],
-                                          style: const TextStyle(
-                                            color: ThemeColors.mainThemeLight,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              : Flexible(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: size.width * 0.1,
-                                        ),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: const BoxDecoration(
-                                            color: ThemeColors.mainThemeLight,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                              bottomLeft: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: SelectableText(
-                                            e["message"],
-                                            textAlign: TextAlign.end,
-                                            style: const TextStyle(
-                                              color:
-                                                  ThemeColors.oppositeTextBox,
-                                              fontSize:
-                                                  ThemeColors.chatFontSize,
-                                              height: 1.5,
-                                            ),
-                                          ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text(
+                                        e["time"],
+                                        style: const TextStyle(
+                                          color: ThemeColors.mainThemeLight,
+                                          fontSize: 12,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          e["time"],
-                                          style: const TextStyle(
-                                            color: ThemeColors.mainThemeLight,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                        ],
-                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                      ],
                     ),
-                  )
-                  .toList(),
-            ],
-          ),
+                  ),
+                )
+                .toList(),
+          ],
         ),
       ),
     );
