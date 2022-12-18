@@ -2,6 +2,7 @@ import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/homepage/homepage.dart';
+import 'package:flutter_chat_app/settings/settings.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 
 void main() {
@@ -109,11 +110,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  fabKey.currentState?.close();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Settings(),
+                    ),
+                  );
+                },
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(24.0),
                 child: const Icon(
-                  Icons.camera_alt_rounded,
+                  CupertinoIcons.settings_solid,
                   color: ThemeColors.topTextColorLight,
                   size: 40,
                 ),

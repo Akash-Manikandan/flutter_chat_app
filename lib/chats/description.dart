@@ -130,8 +130,9 @@ class _DescriptionState extends State<Description> {
                       ),
                       child: Text(
                         widget.id,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 30,
+                          fontFamily: ThemeColors.fontFamily,
                         ),
                       ),
                     ),
@@ -147,29 +148,31 @@ class _DescriptionState extends State<Description> {
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const <Widget>[
+                    children: <Widget>[
                       Text(
                         "Description",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
+                          fontFamily: ThemeColors.fontFamily,
                         ),
                       ),
-                      Gap(20),
+                      const Gap(20),
                       ReadMoreText(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit",
                         trimLines: 3,
                         trimMode: TrimMode.Line,
                         trimCollapsedText: "Read more",
                         trimExpandedText: "...Show less",
-                        moreStyle: TextStyle(
+                        moreStyle: const TextStyle(
                           color: ThemeColors.topTextColorLight,
                         ),
-                        lessStyle: TextStyle(
+                        lessStyle: const TextStyle(
                           color: ThemeColors.topTextColorLight,
                         ),
                         style: TextStyle(
                           fontSize: 18,
+                          fontFamily: ThemeColors.fontFamily,
                         ),
                       ),
                     ],

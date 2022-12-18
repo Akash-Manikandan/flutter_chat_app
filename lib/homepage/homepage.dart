@@ -139,8 +139,8 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(
+              Padding(
+                padding: const EdgeInsets.only(
                   left: 6.0,
                   top: 6.0,
                 ),
@@ -149,6 +149,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     color: ThemeColors.topTextColorLight,
                     fontSize: 24,
+                    fontFamily: ThemeColors.fontFamily,
                   ),
                 ),
               ),
@@ -197,9 +198,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 cursorColor: ThemeColors.topTextColorLight,
                 cursorHeight: 26,
-                style: const TextStyle(
+                style: TextStyle(
                   color: ThemeColors.topTextColorLight,
                   fontSize: 16,
+                  fontFamily: ThemeColors.fontFamily,
                 ),
               ),
             ],
@@ -246,7 +248,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     )
-                    .toList()
+                    .toList(),
+                const Gap(80),
               ],
             ),
           ),

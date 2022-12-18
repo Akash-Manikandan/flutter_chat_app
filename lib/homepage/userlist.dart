@@ -55,17 +55,19 @@ class UserList extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           name,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: ThemeColors.mainThemeLight,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
+                            fontFamily: ThemeColors.fontFamily,
                           ),
                         ),
                         Text(
                           time,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: ThemeColors.mainThemeLight,
                             fontSize: 14,
+                            fontFamily: ThemeColors.fontFamily,
                           ),
                         ),
                       ],
@@ -76,6 +78,9 @@ class UserList extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           lastMsg,
+                          style: TextStyle(
+                            fontFamily: ThemeColors.fontFamily,
+                          ),
                         ),
                         Container(
                           height: 20,

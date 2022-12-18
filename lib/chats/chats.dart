@@ -180,7 +180,7 @@ class _ChartsState extends State<Charts> {
         iconTheme: const IconThemeData(
           color: ThemeColors.topTextColorLight,
         ),
-        titleTextStyle: const TextStyle(
+        titleTextStyle: TextStyle(
           color: ThemeColors.topTextColorLight,
           fontSize: 18,
           fontFamily: ThemeColors.fontFamily,
@@ -245,7 +245,12 @@ class _ChartsState extends State<Charts> {
                       ),
                     );
                   },
-                  child: Text(widget.name),
+                  child: Text(
+                    widget.name,
+                    style: TextStyle(
+                      fontFamily: ThemeColors.fontFamily,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -297,8 +302,9 @@ class _ChartsState extends State<Charts> {
                 borderRadius: BorderRadius.circular(50.0),
               ),
               hintText: 'Write a message ...',
-              hintStyle: const TextStyle(
+              hintStyle: TextStyle(
                 color: ThemeColors.lighterShadeTextLight,
+                fontFamily: ThemeColors.fontFamily,
               ),
               prefixIcon: const Padding(
                 padding: EdgeInsets.only(
@@ -336,9 +342,10 @@ class _ChartsState extends State<Charts> {
               ),
             ),
             cursorColor: ThemeColors.topTextColorLight,
-            style: const TextStyle(
+            style: TextStyle(
               color: ThemeColors.topTextColorLight,
               fontSize: 16,
+              fontFamily: ThemeColors.fontFamily,
             ),
           ),
         ),
@@ -403,19 +410,23 @@ class _ChartsState extends State<Charts> {
                                           children: <Widget>[
                                             Text(
                                               e["name"],
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.w600,
+                                                fontFamily:
+                                                    ThemeColors.fontFamily,
                                               ),
                                             ),
                                             const Gap(10),
                                             SelectableText(
                                               e["message"],
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 color:
                                                     ThemeColors.mainThemeLight,
                                                 fontSize:
                                                     ThemeColors.chatFontSize,
                                                 height: 1.4,
+                                                fontFamily:
+                                                    ThemeColors.fontFamily,
                                               ),
                                             ),
                                           ],
@@ -426,9 +437,10 @@ class _ChartsState extends State<Charts> {
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
                                         e["time"],
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           color: ThemeColors.mainThemeLight,
                                           fontSize: 12,
+                                          fontFamily: ThemeColors.fontFamily,
                                         ),
                                       ),
                                     )
@@ -457,10 +469,11 @@ class _ChartsState extends State<Charts> {
                                         child: SelectableText(
                                           e["message"],
                                           textAlign: TextAlign.end,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             color: ThemeColors.oppositeTextBox,
                                             fontSize: ThemeColors.chatFontSize,
                                             height: 1.5,
+                                            fontFamily: ThemeColors.fontFamily,
                                           ),
                                         ),
                                       ),
@@ -469,9 +482,10 @@ class _ChartsState extends State<Charts> {
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
                                         e["time"],
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           color: ThemeColors.mainThemeLight,
                                           fontSize: 12,
+                                          fontFamily: ThemeColors.fontFamily,
                                         ),
                                       ),
                                     )
