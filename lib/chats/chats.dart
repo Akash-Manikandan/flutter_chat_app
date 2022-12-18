@@ -175,6 +175,7 @@ class _ChartsState extends State<Charts> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         iconTheme: const IconThemeData(
           color: ThemeColors.topTextColorLight,
         ),
@@ -222,74 +223,77 @@ class _ChartsState extends State<Charts> {
           )
         ],
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(10),
-        color: Colors.transparent,
-        child: TextField(
-          decoration: InputDecoration(
-            filled: true,
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
+      bottomNavigationBar: Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: Colors.transparent,
+          child: TextField(
+            decoration: InputDecoration(
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: ThemeColors.lighterShadeTextLight,
+                ),
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: ThemeColors.lighterShadeTextLight,
+                ),
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              fillColor: ThemeColors.mainThemeLight,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: ThemeColors.lighterShadeTextLight,
+                ),
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              hintText: 'Write a message ...',
+              hintStyle: const TextStyle(
                 color: ThemeColors.lighterShadeTextLight,
               ),
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: ThemeColors.lighterShadeTextLight,
-              ),
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            fillColor: ThemeColors.mainThemeLight,
-            border: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: ThemeColors.lighterShadeTextLight,
-              ),
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            hintText: 'Write a message ...',
-            hintStyle: const TextStyle(
-              color: ThemeColors.lighterShadeTextLight,
-            ),
-            prefixIcon: const Padding(
-              padding: EdgeInsets.only(
-                left: 18.0,
-                right: 10.0,
-              ),
-              child: Icon(
-                CupertinoIcons.link,
-                color: ThemeColors.topTextColorLight,
-              ),
-            ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(
-                left: 10.0,
-                right: 6.0,
-              ),
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: const BoxDecoration(
+              prefixIcon: const Padding(
+                padding: EdgeInsets.only(
+                  left: 18.0,
+                  right: 10.0,
+                ),
+                child: Icon(
+                  CupertinoIcons.link,
                   color: ThemeColors.topTextColorLight,
-                  shape: BoxShape.circle,
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    left: 3.0,
+              ),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(
+                  left: 10.0,
+                  right: 6.0,
+                ),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: ThemeColors.topTextColorLight,
+                    shape: BoxShape.circle,
                   ),
-                  child: Icon(
-                    Icons.send,
-                    color: ThemeColors.mainThemeLight,
-                    size: 28,
+                  child: const Padding(
+                    padding: EdgeInsets.only(
+                      left: 3.0,
+                    ),
+                    child: Icon(
+                      Icons.send,
+                      color: ThemeColors.mainThemeLight,
+                      size: 28,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          cursorColor: ThemeColors.topTextColorLight,
-          style: const TextStyle(
-            color: ThemeColors.topTextColorLight,
-            fontSize: 16,
+            cursorColor: ThemeColors.topTextColorLight,
+            style: const TextStyle(
+              color: ThemeColors.topTextColorLight,
+              fontSize: 16,
+            ),
           ),
         ),
       ),
