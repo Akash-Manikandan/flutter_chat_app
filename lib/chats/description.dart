@@ -45,7 +45,7 @@ class _DescriptionState extends State<Description> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: true,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -105,20 +105,20 @@ class _DescriptionState extends State<Description> {
             ],
             backgroundColor: Colors.transparent,
             elevation: 0,
-            expandedHeight: size.height * 0.4,
+            expandedHeight: size.height * 0.4 + 30,
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 children: <Widget>[
                   Container(
                     width: size.width,
-                    height: size.height * 0.4,
+                    height: size.height * 0.5,
                     color: ThemeColors.profileImageBgLightestVersion,
                     child: Hero(
                       tag: widget.id,
                       child: SvgPicture.string(
                         Jdenticon.toSvg(widget.id),
                         width: size.width,
-                        height: size.height * 0.4,
+                        height: size.height * 0.45,
                       ),
                     ),
                   ),
@@ -176,7 +176,7 @@ class _DescriptionState extends State<Description> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
                       ...userList
@@ -191,13 +191,13 @@ class _DescriptionState extends State<Description> {
                                     MaterialPageRoute(
                                       builder: (context) => Charts(
                                         name: each["name"],
-                                        id: each["id"],
+                                        id: each["id"] + "id",
                                       ),
                                     ),
                                   );
                                 },
                                 child: UserList(
-                                  id: each["id"],
+                                  id: each["id"] + "id",
                                   name: each["name"],
                                   lastMsg: each["message"],
                                   time: each["time"],

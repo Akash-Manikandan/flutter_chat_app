@@ -191,6 +191,7 @@ class _HomePageState extends State<HomePage> {
                     child: Icon(
                       CupertinoIcons.search,
                       color: ThemeColors.topTextColorLight,
+                      size: 30,
                     ),
                   ),
                 ),
@@ -219,7 +220,9 @@ class _HomePageState extends State<HomePage> {
                       (each) => MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
+                          behavior: !widget.isClicked
+                              ? HitTestBehavior.translucent
+                              : HitTestBehavior.deferToChild,
                           onTap: !widget.isClicked
                               ? () {
                                   Navigator.push(
