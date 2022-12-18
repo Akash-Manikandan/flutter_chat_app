@@ -182,6 +182,7 @@ class _ChartsState extends State<Charts> {
         titleTextStyle: const TextStyle(
           color: ThemeColors.topTextColorLight,
           fontSize: 18,
+          fontFamily: ThemeColors.fontFamily,
         ),
         automaticallyImplyLeading: false,
         title: Row(
