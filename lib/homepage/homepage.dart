@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               TextField(
                 textAlign: TextAlign.start,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(20),
+                  contentPadding: const EdgeInsets.all(20),
                   enabled: !widget.isClicked,
                   filled: true,
                   focusedBorder: OutlineInputBorder(

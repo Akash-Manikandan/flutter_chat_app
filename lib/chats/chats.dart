@@ -183,9 +183,17 @@ class _ChartsState extends State<Charts> {
           color: ThemeColors.topTextColorLight,
           fontSize: 18,
         ),
-        leadingWidth: 45,
+        automaticallyImplyLeading: false,
         title: Row(
           children: <Widget>[
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                child: const Icon(Icons.arrow_back_ios),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+            ),
+            const Gap(5),
             Container(
               padding: const EdgeInsets.all(3),
               decoration: const BoxDecoration(
