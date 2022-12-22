@@ -118,12 +118,12 @@ class _DescriptionState extends State<Description> {
                       child: SvgPicture.string(
                         Jdenticon.toSvg(widget.id),
                         width: size.width,
-                        height: size.height * 0.45,
+                        height: size.height * 0.4,
                       ),
                     ),
                   ),
                   Positioned(
-                    bottom: 0,
+                    bottom: 00,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 18.0,
@@ -184,29 +184,12 @@ class _DescriptionState extends State<Description> {
                     children: [
                       ...userList
                           .map(
-                            (each) => MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Charts(
-                                        name: each["name"],
-                                        id: each["id"] + "id",
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: UserList(
-                                  id: each["id"] + "id",
-                                  name: each["name"],
-                                  lastMsg: each["message"],
-                                  time: each["time"],
-                                  count: each["count"],
-                                ),
-                              ),
+                            (each) => UserList(
+                              id: each["id"] + "id",
+                              name: each["name"],
+                              lastMsg: each["message"],
+                              time: each["time"],
+                              count: each["count"],
                             ),
                           )
                           .toList()

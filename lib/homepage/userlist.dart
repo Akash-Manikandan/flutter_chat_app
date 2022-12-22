@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 
-class UserList extends StatelessWidget {
+class UserList extends StatefulWidget {
   const UserList({
     super.key,
     required this.name,
@@ -18,6 +18,12 @@ class UserList extends StatelessWidget {
   final String lastMsg;
   final String time;
   final int count;
+
+  @override
+  State<UserList> createState() => _UserListState();
+}
+
+class _UserListState extends State<UserList> {
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
@@ -37,9 +43,9 @@ class UserList extends StatelessWidget {
                   radius: 25,
                   backgroundColor: Colors.transparent,
                   child: Hero(
-                    tag: id,
+                    tag: widget.id,
                     child: SvgPicture.string(
-                      Jdenticon.toSvg(id),
+                      Jdenticon.toSvg(widget.id),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -54,7 +60,7 @@ class UserList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          name,
+                          widget.name,
                           style: TextStyle(
                             color: ThemeColors.mainThemeLight,
                             fontSize: 16,
@@ -63,7 +69,7 @@ class UserList extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          time,
+                          widget.time,
                           style: TextStyle(
                             color: ThemeColors.mainThemeLight,
                             fontSize: 14,
@@ -77,7 +83,7 @@ class UserList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          lastMsg,
+                          widget.lastMsg,
                           style: TextStyle(
                             fontFamily: ThemeColors.fontFamily,
                           ),
@@ -92,7 +98,7 @@ class UserList extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "$count",
+                              "${widget.count}",
                               style: const TextStyle(
                                 color: ThemeColors.topTextColorLight,
                                 fontSize: 12,

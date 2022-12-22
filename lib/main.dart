@@ -1,6 +1,7 @@
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/addgroup/addgroup.dart';
 import 'package:flutter_chat_app/homepage/homepage.dart';
 import 'package:flutter_chat_app/settings/settings.dart';
 import 'package:flutter_chat_app/themecolors.dart';
@@ -29,6 +30,24 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(),
     );
   }
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const AddGroup(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -138,7 +157,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  fabKey.currentState?.close();
+                  Navigator.of(context).push(
+                    _createRoute(),
+                  );
+                },
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(24.0),
                 child: const Icon(

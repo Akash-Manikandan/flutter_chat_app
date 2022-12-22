@@ -234,21 +234,24 @@ class _ChartsState extends State<Charts> {
                   ),
                 ),
                 const Gap(12),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Description(
-                          id: widget.id,
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Description(
+                            id: widget.id,
+                          ),
                         ),
+                      );
+                    },
+                    child: Text(
+                      widget.name,
+                      style: TextStyle(
+                        fontFamily: ThemeColors.fontFamily,
                       ),
-                    );
-                  },
-                  child: Text(
-                    widget.name,
-                    style: TextStyle(
-                      fontFamily: ThemeColors.fontFamily,
                     ),
                   ),
                 ),
