@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: ThemeColors.mainThemeLight,
         ),
-        fontFamily: ThemeColors.fontFamily,
       ),
       home: const MyHomePage(),
     );

@@ -20,9 +20,12 @@ class _SettingsState extends State<Settings> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Text(
+            Text(
               "What font you want?",
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: ThemeColors.fontFamily,
+              ),
             ),
             const Divider(),
             RadioListTile(
@@ -37,7 +40,12 @@ class _SettingsState extends State<Settings> {
               },
             ),
             RadioListTile(
-              title: const Text("Montserrat"),
+              title: Text(
+                "Montserrat",
+                style: TextStyle(
+                  fontFamily: ThemeColors.fontFamily,
+                ),
+              ),
               value: "Montserrat",
               groupValue: gender,
               onChanged: (value) {
@@ -48,7 +56,12 @@ class _SettingsState extends State<Settings> {
               },
             ),
             RadioListTile(
-              title: const Text("Poppins"),
+              title: Text(
+                "Poppins",
+                style: TextStyle(
+                  fontFamily: ThemeColors.fontFamily,
+                ),
+              ),
               value: "Poppins",
               groupValue: gender,
               onChanged: (value) {
@@ -59,7 +72,12 @@ class _SettingsState extends State<Settings> {
               },
             ),
             RadioListTile(
-              title: const Text("Soban"),
+              title: Text(
+                "Soban",
+                style: TextStyle(
+                  fontFamily: ThemeColors.fontFamily,
+                ),
+              ),
               value: "Soban",
               groupValue: gender,
               onChanged: (value) {
