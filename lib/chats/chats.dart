@@ -169,8 +169,6 @@ class _ChartsState extends State<Charts> {
     }
   ];
 
-  final myId = "Aishwarya";
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -363,12 +361,12 @@ class _ChartsState extends State<Charts> {
                   (e) => Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
-                      mainAxisAlignment: (e["id"] == myId)
+                      mainAxisAlignment: (e["id"] == widget.id)
                           ? MainAxisAlignment.end
                           : MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        (e["id"] != myId)
+                        (e["id"] != widget.id)
                             ? Container(
                                 padding: const EdgeInsets.all(3),
                                 decoration: const BoxDecoration(
@@ -386,7 +384,7 @@ class _ChartsState extends State<Charts> {
                               )
                             : const SizedBox.shrink(),
                         const Gap(10),
-                        (e["id"] != myId)
+                        (e["id"] != widget.id)
                             ? Flexible(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_app/chats/chats.dart';
-import 'package:flutter_chat_app/homepage/userlist.dart';
+import 'package:flutter_chat_app/chats/userlistdesc.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -184,12 +183,11 @@ class _DescriptionState extends State<Description> {
                     children: [
                       ...userList
                           .map(
-                            (each) => UserList(
-                              id: each["id"] + "id",
+                            (each) => UserListDesc(
+                              id: each["id"],
                               name: each["name"],
                               lastMsg: each["message"],
                               time: each["time"],
-                              count: each["count"],
                             ),
                           )
                           .toList()

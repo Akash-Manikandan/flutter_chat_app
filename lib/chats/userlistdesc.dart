@@ -4,34 +4,40 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 
-class UserList extends StatefulWidget {
-  const UserList({
+class UserListDesc extends StatefulWidget {
+  const UserListDesc({
     super.key,
     required this.name,
     required this.id,
     required this.lastMsg,
     required this.time,
-    required this.count,
   });
   final String name;
   final String id;
   final String lastMsg;
   final String time;
-  final int count;
 
   @override
-  State<UserList> createState() => _UserListState();
+  State<UserListDesc> createState() => _UserListDescState();
 }
 
-class _UserListState extends State<UserList> {
+class _UserListDescState extends State<UserListDesc> {
+  bool isPressed = false;
+
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: <Widget>[
-          Row(
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        color:
+            isPressed ? ThemeColors.lighterShadeTextLight : Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12.0,
+            vertical: 16.0,
+          ),
+          child: Row(
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(3),
@@ -42,12 +48,9 @@ class _UserListState extends State<UserList> {
                 child: CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.transparent,
-                  child: Hero(
-                    tag: widget.id,
-                    child: SvgPicture.string(
-                      Jdenticon.toSvg(widget.id),
-                      fit: BoxFit.contain,
-                    ),
+                  child: SvgPicture.string(
+                    Jdenticon.toSvg(widget.id),
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
@@ -88,29 +91,6 @@ class _UserListState extends State<UserList> {
                             fontFamily: ThemeColors.fontFamily,
                           ),
                         ),
-                        (widget.count != 0)
-                            ? Container(
-                                height: 20,
-                                width: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ThemeColors.mainThemeLight,
-                                ),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "${widget.count}",
-                                    style: const TextStyle(
-                                      color: ThemeColors.topTextColorLight,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: "SFProDisplay",
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
                       ],
                     ),
                   ],
@@ -118,8 +98,7 @@ class _UserListState extends State<UserList> {
               ),
             ],
           ),
-          const Gap(10),
-        ],
+        ),
       ),
     );
   }

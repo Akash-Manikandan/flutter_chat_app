@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_app/homepage/userlistwithouthero.dart';
+import 'package:flutter_chat_app/addgroup/userlistwithouthero.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
 
@@ -18,105 +18,105 @@ class _AddGroupState extends State<AddGroup> {
       "name": "Karthi",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Aishwarya2",
       "name": "Aishwarya",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 7,
+      "count": 0,
     },
     {
       "id": "Akash3",
       "name": "Akash",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Karthi4",
       "name": "Karthi",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Aishwarya5",
       "name": "Aishwarya",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 7,
+      "count": 0,
     },
     {
       "id": "Akash6",
       "name": "Akash",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Karthi7",
       "name": "Karthi",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Aishwarya8",
       "name": "Aishwarya",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 7,
+      "count": 0,
     },
     {
       "id": "Akash9",
       "name": "Akash",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Karthi10",
       "name": "Karthi",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Aishwarya11",
       "name": "Aishwarya",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 7,
+      "count": 0,
     },
     {
       "id": "Akash12",
       "name": "Akash",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Karthi13",
       "name": "Karthi",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     },
     {
       "id": "Aishwarya15",
       "name": "Aishwarya",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 7,
+      "count": 0,
     },
     {
       "id": "Akash16",
       "name": "Akash",
       "lastMsg": "Hello, Good Morning",
       "time": "11:47 PM",
-      "count": 4,
+      "count": 0,
     }
   ];
   void addValue(String id) {
