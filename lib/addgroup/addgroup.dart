@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/homepage/userlistwithouthero.dart';
 import 'package:flutter_chat_app/themecolors.dart';
@@ -12,7 +11,7 @@ class AddGroup extends StatefulWidget {
 }
 
 class _AddGroupState extends State<AddGroup> {
-  List<String> list = [];
+  Set<String> list = {};
   List<Map<String, dynamic>> userList = [
     {
       "id": "Karthi1",
@@ -188,6 +187,7 @@ class _AddGroupState extends State<AddGroup> {
                   count: each["count"],
                   listAdd: addValue,
                   listRemove: removeValue,
+                  lcount: list.length,
                 );
               },
             ).toList(),

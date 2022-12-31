@@ -14,6 +14,7 @@ class UserListWithoutHero extends StatefulWidget {
     required this.count,
     required this.listAdd,
     required this.listRemove,
+    required this.lcount,
   });
   final String name;
   final String id;
@@ -22,6 +23,7 @@ class UserListWithoutHero extends StatefulWidget {
   final int count;
   final Function listAdd;
   final Function listRemove;
+  final int lcount;
   @override
   State<UserListWithoutHero> createState() => _UserListWithoutHeroState();
 }
@@ -35,7 +37,7 @@ class _UserListWithoutHeroState extends State<UserListWithoutHero> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onLongPress: (!isPressed)
+        onLongPress: (!isPressed && widget.lcount == 0)
             ? () {
                 setState(() {
                   isPressed = true;
@@ -43,14 +45,19 @@ class _UserListWithoutHeroState extends State<UserListWithoutHero> {
                 widget.listAdd(widget.id);
               }
             : null,
-        onTap: (isPressed)
-            ? () {
-                setState(() {
-                  isPressed = false;
-                });
-                widget.listRemove(widget.id);
-              }
-            : null,
+        onTap: () {
+          if (isPressed) {
+            setState(() {
+              isPressed = false;
+            });
+            widget.listRemove(widget.id);
+          } else if (widget.lcount != 0) {
+            setState(() {
+              isPressed = true;
+            });
+            widget.listAdd(widget.id);
+          }
+        },
         child: Container(
           color: isPressed
               ? ThemeColors.lighterShadeTextLight
