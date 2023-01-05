@@ -180,6 +180,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   hintText: 'Search chat, people and more...',
+                  hintMaxLines: 1,
                   hintStyle: const TextStyle(
                     color: ThemeColors.lighterShadeTextLight,
                     fontSize: 16,

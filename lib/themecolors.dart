@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeColors {
-  static String fontFamily = "Nexa";
+  static String fontFamily = "Fredoka";
   static const Color mainThemeLight = Color(0xfe101920);
   static const Color topTextColorLight = Color(0xffedabef);
   static const Color lighterShadeTextLight = Color(0xaaedabef);

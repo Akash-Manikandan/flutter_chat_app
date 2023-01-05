@@ -113,6 +113,11 @@ flutter:
     - family: Raleway
       fonts:
         - asset: assets/fonts/Raleway-Medium.ttf
+    - family: Fredoka
+      fonts:
+        - asset: assets/fonts/Fredoka-Regular.ttf
+        - asset: assets/fonts/Fredoka-SemiBold.ttf
+          weight: 600
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

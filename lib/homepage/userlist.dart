@@ -60,17 +60,23 @@ class _UserListState extends State<UserList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          widget.name,
-                          style: TextStyle(
-                            color: ThemeColors.mainThemeLight,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: ThemeColors.fontFamily,
+                        Flexible(
+                          child: Text(
+                            widget.name,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: ThemeColors.mainThemeLight,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: ThemeColors.fontFamily,
+                            ),
                           ),
                         ),
                         Text(
                           widget.time,
+                          maxLines: 1,
                           style: TextStyle(
                             color: ThemeColors.mainThemeLight,
                             fontSize: 14,
@@ -83,10 +89,15 @@ class _UserListState extends State<UserList> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          widget.lastMsg,
-                          style: TextStyle(
-                            fontFamily: ThemeColors.fontFamily,
+                        Flexible(
+                          child: Text(
+                            widget.lastMsg,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontFamily: ThemeColors.fontFamily,
+                            ),
                           ),
                         ),
                         (widget.count != 0)
