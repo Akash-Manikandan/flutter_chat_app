@@ -8,9 +8,9 @@ import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:readmore/readmore.dart';
 
 class Description extends StatefulWidget {
-  const Description({super.key, required this.id});
+  const Description({super.key, required this.id, required this.name});
   final String id;
-
+  final String name;
   @override
   State<Description> createState() => _DescriptionState();
 }
@@ -111,7 +111,7 @@ class _DescriptionState extends State<Description> {
                   Container(
                     width: size.width,
                     height: size.height * 0.5,
-                    color: ThemeColors.profileImageBgLightestVersion,
+                    color: ThemeColors.mainThemeLight,
                     child: Hero(
                       tag: widget.id,
                       child: SvgPicture.string(
@@ -128,14 +128,15 @@ class _DescriptionState extends State<Description> {
                         horizontal: 18.0,
                       ),
                       child: Text(
-                        widget.id,
+                        widget.name,
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: ThemeColors.fontFamily,
+                          color: ThemeColors.topTextColorLight,
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -180,7 +181,7 @@ class _DescriptionState extends State<Description> {
                 Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       ...userList
                           .map(
                             (each) => UserListDesc(

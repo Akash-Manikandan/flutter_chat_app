@@ -95,17 +95,23 @@ class _MyHomePageState extends State<MyHomePage> {
             fabIconBorder: const CircleBorder(),
             fabColor: ThemeColors.mainThemeLight,
             fabOpenIcon: const Center(
-              child: Icon(
-                Icons.add,
-                color: ThemeColors.topTextColorLight,
-                size: 40,
+              child: Tooltip(
+                message: "Options",
+                child: Icon(
+                  Icons.add,
+                  color: ThemeColors.topTextColorLight,
+                  size: 40,
+                ),
               ),
             ),
             fabCloseIcon: const Center(
-              child: Icon(
-                Icons.close,
-                color: Colors.red,
-                size: 40,
+              child: Tooltip(
+                message: "Close",
+                child: Icon(
+                  Icons.close,
+                  color: Colors.red,
+                  size: 40,
+                ),
               ),
             ),
             fabMargin: const EdgeInsets.all(16.0),
@@ -121,10 +127,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {},
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(24.0),
-                child: const Icon(
-                  Icons.people_alt_rounded,
-                  color: ThemeColors.topTextColorLight,
-                  size: 40,
+                child: const Tooltip(
+                  message: "Dummy",
+                  child: Icon(
+                    Icons.people_alt_rounded,
+                    color: ThemeColors.topTextColorLight,
+                    size: 40,
+                  ),
                 ),
               ),
               RawMaterialButton(
@@ -139,20 +148,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(24.0),
-                child: const Icon(
-                  CupertinoIcons.settings_solid,
-                  color: ThemeColors.topTextColorLight,
-                  size: 40,
+                child: const Tooltip(
+                  message: "Settings",
+                  child: Icon(
+                    CupertinoIcons.settings_solid,
+                    color: ThemeColors.topTextColorLight,
+                    size: 40,
+                  ),
                 ),
               ),
               RawMaterialButton(
                 onPressed: () {},
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(24.0),
-                child: const Icon(
-                  CupertinoIcons.phone_fill,
-                  color: ThemeColors.topTextColorLight,
-                  size: 40,
+                child: const Tooltip(
+                  message: "Phone",
+                  child: Icon(
+                    CupertinoIcons.phone_fill,
+                    color: ThemeColors.topTextColorLight,
+                    size: 40,
+                  ),
                 ),
               ),
               RawMaterialButton(
@@ -164,10 +179,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(24.0),
-                child: const Icon(
-                  CupertinoIcons.person_add_solid,
-                  color: ThemeColors.topTextColorLight,
-                  size: 40,
+                child: const Tooltip(
+                  message: "Add Group",
+                  child: Icon(
+                    CupertinoIcons.person_add_solid,
+                    color: ThemeColors.topTextColorLight,
+                    size: 40,
+                  ),
                 ),
               )
             ],

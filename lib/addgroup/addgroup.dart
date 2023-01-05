@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/addgroup/userlistwithouthero.dart';
 import 'package:flutter_chat_app/themecolors.dart';
@@ -136,6 +137,7 @@ class _AddGroupState extends State<AddGroup> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        toolbarHeight: 70,
         title: Row(
           children: [
             MouseRegion(
@@ -166,7 +168,7 @@ class _AddGroupState extends State<AddGroup> {
                     onPressed: () {},
                     tooltip: "Add new group",
                     icon: const Icon(
-                      Icons.add,
+                      CupertinoIcons.add_circled,
                       size: 32,
                     ),
                   ),

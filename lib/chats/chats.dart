@@ -189,7 +189,10 @@ class _ChartsState extends State<Charts> {
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                child: const Icon(Icons.arrow_back_ios),
+                child: const Tooltip(
+                  message: "Back",
+                  child: Icon(Icons.arrow_back_ios),
+                ),
                 onTap: () => Navigator.of(context).pop(),
               ),
             ),
@@ -207,6 +210,7 @@ class _ChartsState extends State<Charts> {
                           MaterialPageRoute(
                             builder: (context) => Description(
                               id: widget.id,
+                              name: widget.name,
                             ),
                           ),
                         );
@@ -217,7 +221,7 @@ class _ChartsState extends State<Charts> {
                         padding: const EdgeInsets.all(3),
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: ThemeColors.profileImageBgChatPage,
+                          color: ThemeColors.mainThemeLight,
                         ),
                         child: CircleAvatar(
                           radius: 22,
@@ -241,14 +245,18 @@ class _ChartsState extends State<Charts> {
                         MaterialPageRoute(
                           builder: (context) => Description(
                             id: widget.id,
+                            name: widget.name,
                           ),
                         ),
                       );
                     },
-                    child: Text(
-                      widget.name,
-                      style: TextStyle(
-                        fontFamily: ThemeColors.fontFamily,
+                    child: Tooltip(
+                      message: widget.name,
+                      child: Text(
+                        widget.name,
+                        style: TextStyle(
+                          fontFamily: ThemeColors.fontFamily,
+                        ),
                       ),
                     ),
                   ),
@@ -260,17 +268,23 @@ class _ChartsState extends State<Charts> {
         actions: const <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Icon(
-              CupertinoIcons.videocam_fill,
-              size: 30,
+            child: Tooltip(
+              message: "Video Call",
+              child: Icon(
+                CupertinoIcons.videocam_fill,
+                size: 30,
+              ),
             ),
           ),
           Gap(5),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Icon(
-              CupertinoIcons.phone_fill,
-              size: 30,
+            child: Tooltip(
+              message: "Phone",
+              child: Icon(
+                CupertinoIcons.phone_fill,
+                size: 30,
+              ),
             ),
           )
         ],
@@ -312,9 +326,15 @@ class _ChartsState extends State<Charts> {
                   left: 18.0,
                   right: 10.0,
                 ),
-                child: Icon(
-                  CupertinoIcons.link,
-                  color: ThemeColors.topTextColorLight,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Tooltip(
+                    message: "Add Files",
+                    child: Icon(
+                      CupertinoIcons.link,
+                      color: ThemeColors.topTextColorLight,
+                    ),
+                  ),
                 ),
               ),
               suffixIcon: Padding(
@@ -322,21 +342,27 @@ class _ChartsState extends State<Charts> {
                   left: 10.0,
                   right: 6.0,
                 ),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.topTextColorLight,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
-                      left: 3.0,
-                    ),
-                    child: Icon(
-                      Icons.send,
-                      color: ThemeColors.mainThemeLight,
-                      size: 28,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Tooltip(
+                    message: "Send",
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: ThemeColors.topTextColorLight,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                          left: 3.0,
+                        ),
+                        child: Icon(
+                          Icons.send,
+                          color: ThemeColors.mainThemeLight,
+                          size: 28,
+                        ),
+                      ),
                     ),
                   ),
                 ),

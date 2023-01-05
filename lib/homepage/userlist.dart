@@ -57,6 +57,7 @@ class _UserListState extends State<UserList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
