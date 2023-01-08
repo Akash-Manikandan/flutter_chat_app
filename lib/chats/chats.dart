@@ -4,170 +4,50 @@ import 'package:flutter_chat_app/chats/description.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class Charts extends StatefulWidget {
-  const Charts({super.key, required this.name, required this.id});
+  const Charts({
+    super.key,
+    required this.name,
+    required this.id,
+    required this.socket,
+    required this.userId,
+  });
   final String name;
   final String id;
-
+  final Socket socket;
+  final String? userId;
   @override
   State<Charts> createState() => _ChartsState();
 }
 
 class _ChartsState extends State<Charts> {
-  final List<Map<String, dynamic>> userList = [
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning cdkbfkhifodigoiGFIODGUIGFUIVG",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning cdkbfkhifodigoiGFIODGUIGFUIVG",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning cdkbfkhifodigoiGFIODGUIGFUIVG",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning cdkbfkhifodigoiGFIODGUIGFUIVG",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning cdkbfkhifodigoiGFIODGUIGFUIVG",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message":
-          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning cdkbfkhifodigoiGFIODGUIGFUIVG",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message":
-          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message":
-          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, ",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "10:47 PM",
-      "count": 4,
-    }
-  ];
+  List<dynamic> msgList = [];
+  final TextEditingController _message = TextEditingController();
+  @override
+  void initState() {
+    widget.socket.emitWithAck("joinRoom", {"groupId": widget.id},
+        ack: (payload) {
+      print(payload);
+    });
+    widget.socket.emitWithAck(
+        "fetchAllMessages", {"groupId": widget.id, "userId": widget.id},
+        ack: (payload) {
+      print(payload);
+      setState(() {
+        msgList = payload["allMessages"];
+      });
+    });
+    widget.socket.on("chatToClient", (data) {
+      setState(() {
+        msgList.add(data);
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -296,6 +176,7 @@ class _ChartsState extends State<Charts> {
           padding: const EdgeInsets.all(10),
           color: Colors.transparent,
           child: TextField(
+            controller: _message,
             decoration: InputDecoration(
               filled: true,
               focusedBorder: OutlineInputBorder(
@@ -345,23 +226,36 @@ class _ChartsState extends State<Charts> {
                 ),
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
-                  child: Tooltip(
-                    message: "Send",
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: ThemeColors.topTextColorLight,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(
-                          left: 3.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      widget.socket.emitWithAck(
+                          "chatToServer",
+                          {
+                            "userId": widget.userId,
+                            "groupId": widget.id,
+                            "content": _message.text.trim()
+                          },
+                          ack: (payload) {});
+                      _message.clear();
+                    },
+                    child: Tooltip(
+                      message: "Send",
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: ThemeColors.topTextColorLight,
+                          shape: BoxShape.circle,
                         ),
-                        child: Icon(
-                          Icons.send,
-                          color: ThemeColors.mainThemeLight,
-                          size: 28,
+                        child: const Padding(
+                          padding: EdgeInsets.only(
+                            left: 3.0,
+                          ),
+                          child: Icon(
+                            Icons.send,
+                            color: ThemeColors.mainThemeLight,
+                            size: 28,
+                          ),
                         ),
                       ),
                     ),
@@ -383,17 +277,17 @@ class _ChartsState extends State<Charts> {
         reverse: true,
         child: Column(
           children: <Widget>[
-            ...userList
+            ...msgList
                 .map(
                   (e) => Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
-                      mainAxisAlignment: (e["id"] == widget.id)
+                      mainAxisAlignment: (e["user"]["id"] == widget.userId)
                           ? MainAxisAlignment.end
                           : MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        (e["id"] != widget.id)
+                        (e["user"]["id"] != widget.userId)
                             ? Container(
                                 padding: const EdgeInsets.all(3),
                                 decoration: const BoxDecoration(
@@ -404,14 +298,14 @@ class _ChartsState extends State<Charts> {
                                   radius: 18,
                                   backgroundColor: Colors.transparent,
                                   child: SvgPicture.string(
-                                    Jdenticon.toSvg(e["id"]),
+                                    Jdenticon.toSvg(e["user"]["id"]),
                                     fit: BoxFit.contain,
                                   ),
                                 ),
                               )
                             : const SizedBox.shrink(),
                         const Gap(10),
-                        (e["id"] != widget.id)
+                        (e["user"]["id"] != widget.userId)
                             ? Flexible(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -437,7 +331,7 @@ class _ChartsState extends State<Charts> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              e["name"],
+                                              e["user"]["username"],
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontFamily:
@@ -446,7 +340,7 @@ class _ChartsState extends State<Charts> {
                                             ),
                                             const Gap(10),
                                             SelectableText(
-                                              e["message"],
+                                              e["content"],
                                               style: TextStyle(
                                                 color:
                                                     ThemeColors.mainThemeLight,
@@ -464,7 +358,11 @@ class _ChartsState extends State<Charts> {
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
-                                        e["time"],
+                                        DateFormat.jm().format(
+                                          DateTime.parse(
+                                            e["createdAt"],
+                                          ).toLocal(),
+                                        ),
                                         style: TextStyle(
                                           color: ThemeColors.mainThemeLight,
                                           fontSize: 12,
@@ -495,7 +393,7 @@ class _ChartsState extends State<Charts> {
                                           ),
                                         ),
                                         child: SelectableText(
-                                          e["message"],
+                                          e["content"],
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: ThemeColors.oppositeTextBox,
@@ -509,7 +407,11 @@ class _ChartsState extends State<Charts> {
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
-                                        e["time"],
+                                        DateFormat.jm().format(
+                                          DateTime.parse(
+                                            e["createdAt"],
+                                          ).toLocal(),
+                                        ),
                                         style: TextStyle(
                                           color: ThemeColors.mainThemeLight,
                                           fontSize: 12,

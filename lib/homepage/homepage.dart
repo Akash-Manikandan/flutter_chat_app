@@ -29,113 +29,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> userList = [
-    //   {
-    //     "id": "Karthi",
-    //     "name": "Karthi",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "Aishwarya",
-    //     "name": "Aishwarya",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 7,
-    //   },
-    //   {
-    //     "id": "Akash",
-    //     "name": "Akash",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S1",
-    //     "name": "S1",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S2",
-    //     "name": "S2",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 7,
-    //   },
-    //   {
-    //     "id": "S3",
-    //     "name": "S3",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S4",
-    //     "name": "S4",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S5",
-    //     "name": "S5",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 7,
-    //   },
-    //   {
-    //     "id": "S6",
-    //     "name": "S6",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S7",
-    //     "name": "S7",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S8",
-    //     "name": "S8",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 7,
-    //   },
-    //   {
-    //     "id": "S9",
-    //     "name": "S9",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S10",
-    //     "name": "S10",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   },
-    //   {
-    //     "id": "S11",
-    //     "name": "S11",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 7,
-    //   },
-    //   {
-    //     "id": "S12",
-    //     "name": "S12",
-    //     "lastMsg": "Hello, Good Morning",
-    //     "time": "11:47 PM",
-    //     "count": 4,
-    //   }
-  ];
+  List<dynamic> userList = [];
   bool oneselected = false;
 
   void onChange() {
@@ -340,6 +234,8 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) => Charts(
                                         name: each["groupName"],
                                         id: each["id"],
+                                        socket: socket,
+                                        userId: widget.userId,
                                       ),
                                     ),
                                   );
@@ -373,3 +269,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+/* 
+DateFormat.jm().format(DateTime.parse(e["createdAt"],).toLocal(),)
+
+*/
