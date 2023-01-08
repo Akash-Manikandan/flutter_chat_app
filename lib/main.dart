@@ -84,6 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  void closeNavigation() {
+    fabKey.currentState?.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: HomePage(
                   isClicked: isClicked,
                   onAuthStateChange: onAuthStateChange,
+                  closeNavigation: closeNavigation,
                 ),
               ),
             ),

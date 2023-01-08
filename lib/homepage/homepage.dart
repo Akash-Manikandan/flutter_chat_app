@@ -15,9 +15,11 @@ class HomePage extends StatefulWidget {
     super.key,
     required this.isClicked,
     required this.onAuthStateChange,
+    required this.closeNavigation,
   });
   final bool isClicked;
   final Function onAuthStateChange;
+  final Function closeNavigation;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -321,7 +323,9 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   );
                                 }
-                              : () {},
+                              : () {
+                                  widget.closeNavigation();
+                                },
                           child: UserList(
                             id: each["id"],
                             name: each["name"],
