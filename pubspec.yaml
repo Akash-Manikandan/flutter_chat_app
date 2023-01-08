@@ -41,7 +41,8 @@ dependencies:
   readmore: ^2.2.0
   flutter_svg: ^1.1.6
   fab_circular_menu: ^1.0.2
-
+  http: ^0.13.5
+  shared_preferences: ^2.0.15
 
 
 

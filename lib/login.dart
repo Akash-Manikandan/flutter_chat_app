@@ -1,6 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+addStringToSF(String info) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('userDetails', info);
+}
+
+Future<dynamic> LoginReq(String username, String password) async {
+  final response = await http.post(
+    Uri.parse(
+        'https://nestchatbackend-production.up.railway.app/user/signinUser'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'username': username, 'password': password}),
+  );
+
+  // print((response.statusCode));
+
+  var result = jsonDecode(response.body);
+
+  // result["statusCode"] = response.statusCode;
+  // result.putIfAbsent("statusCode", () => response.statusCode);
+
+  // print(result);
+  // if (response.statusCode == 200) {
+  //   return result;
+  // } else {
+  //   // result["status"] = response.statusCode;
+  //   // print(result);
+  //   return result;
+  // }
+  return result;
+}
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.onAuthStateChange});
@@ -10,6 +48,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  Future<dynamic>? LoginDetails;
   final TextEditingController _name = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool name = false;
@@ -131,10 +170,73 @@ class _LoginState extends State<Login> {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: (pass && name)
-                      ? () {
-                          print(_name.text.trim());
-                          print(_password.text.trim());
-                          widget.onAuthStateChange(true);
+                      ? () async {
+                          // print(_name.text.trim());
+                          // print(_password.text.trim());
+
+                          LoginDetails = LoginReq(
+                            _name.text.trim(),
+                            _password.text.trim(),
+                          );
+
+                          var result = await LoginDetails;
+                          // print(result);
+                          if (result["verified"] == true) {
+                            widget.onAuthStateChange(true);
+                            addStringToSF(
+                              jsonEncode(result),
+                            );
+                          } else if (result["statusCode"] == 400) {
+                            // print("400000000000000000000000");
+                            // print(result);
+                            showDialog<String>(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Error'),
+                                content: Text(result["message"][0]),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      // setState(
+                                      //   () {
+                                      //     isLoading = false;
+                                      //   },
+                                      // );
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            // print("40111111");
+                            // print(result);
+                            showDialog<String>(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Error'),
+                                content: Text(
+                                  (result["message"][0]),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      // setState(
+                                      //   () {
+                                      //     isLoading = false;
+                                      //   },
+                                      // );
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         }
                       : null,
                   child: Container(
