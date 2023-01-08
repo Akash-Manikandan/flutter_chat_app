@@ -28,112 +28,112 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> userList = [
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S1",
-      "name": "S1",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S2",
-      "name": "S2",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "S3",
-      "name": "S3",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S4",
-      "name": "S4",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S5",
-      "name": "S5",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "S6",
-      "name": "S6",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S7",
-      "name": "S7",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S8",
-      "name": "S8",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "S9",
-      "name": "S9",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S10",
-      "name": "S10",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "S11",
-      "name": "S11",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "S12",
-      "name": "S12",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    }
+  List<dynamic> userList = [
+    //   {
+    //     "id": "Karthi",
+    //     "name": "Karthi",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "Aishwarya",
+    //     "name": "Aishwarya",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 7,
+    //   },
+    //   {
+    //     "id": "Akash",
+    //     "name": "Akash",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S1",
+    //     "name": "S1",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S2",
+    //     "name": "S2",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 7,
+    //   },
+    //   {
+    //     "id": "S3",
+    //     "name": "S3",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S4",
+    //     "name": "S4",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S5",
+    //     "name": "S5",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 7,
+    //   },
+    //   {
+    //     "id": "S6",
+    //     "name": "S6",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S7",
+    //     "name": "S7",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S8",
+    //     "name": "S8",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 7,
+    //   },
+    //   {
+    //     "id": "S9",
+    //     "name": "S9",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S10",
+    //     "name": "S10",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   },
+    //   {
+    //     "id": "S11",
+    //     "name": "S11",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 7,
+    //   },
+    //   {
+    //     "id": "S12",
+    //     "name": "S12",
+    //     "lastMsg": "Hello, Good Morning",
+    //     "time": "11:47 PM",
+    //     "count": 4,
+    //   }
   ];
   bool oneselected = false;
 
@@ -189,6 +189,11 @@ class _HomePageState extends State<HomePage> {
     socket.onConnect((_) {
       print(socket.connected);
       print('Connection established');
+    });
+    socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
+        ack: (data) {
+      print(data);
+      userList = data;
     });
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
@@ -318,7 +323,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 ...userList
                     .map(
-                      (each) => MouseRegion(
+                      (each) {return(MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           behavior: !widget.isClicked
@@ -341,15 +346,15 @@ class _HomePageState extends State<HomePage> {
                                 },
                           child: UserList(
                             id: each["id"],
-                            name: each["name"],
-                            lastMsg: each["lastMsg"],
-                            time: each["time"],
-                            count: each["count"],
+                            name: each["groupName"],
+                            lastMsg: each["messages"][0]["content"],
+                            time: each["messages"][0]["createdAt"],
+                            count: 0,
                             onChange: onChange,
                             oneselected: oneselected,
                           ),
                         ),
-                      ),
+                      ));}
                     )
                     .toList(),
                 const Gap(80),
