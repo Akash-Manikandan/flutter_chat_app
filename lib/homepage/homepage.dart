@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_chat_app/homepage/userlist.dart';
 
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -193,7 +194,9 @@ class _HomePageState extends State<HomePage> {
     socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
         ack: (data) {
       print(data);
-      userList = data;
+      setState(() {
+        userList = data;
+      });
     });
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
@@ -323,7 +326,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 ...userList
                     .map(
-                      (each) {return(MouseRegion(
+                      (each) => MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           behavior: !widget.isClicked
@@ -335,7 +338,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Charts(
-                                        name: each["name"],
+                                        name: each["groupName"],
                                         id: each["id"],
                                       ),
                                     ),
@@ -348,13 +351,17 @@ class _HomePageState extends State<HomePage> {
                             id: each["id"],
                             name: each["groupName"],
                             lastMsg: each["messages"][0]["content"],
-                            time: each["messages"][0]["createdAt"],
+                            time: DateFormat.jm().format(
+                              DateTime.parse(
+                                each["messages"][0]["createdAt"],
+                              ).toLocal(),
+                            ),
                             count: 0,
                             onChange: onChange,
                             oneselected: oneselected,
                           ),
                         ),
-                      ));}
+                      ),
                     )
                     .toList(),
                 const Gap(80),
