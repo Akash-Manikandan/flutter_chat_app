@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/chats/chats.dart';
 import 'package:flutter_chat_app/homepage/userlist.dart';
@@ -168,12 +169,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   initSocket() {
-    socket = IO.io(
-      "https://nestchatbackend-production.up.railway.app",
-      IO.OptionBuilder()
-          .setExtraHeaders({'senderid': widget.userId}) // optional
-          .build(),
-    );
+    if (kIsWeb) {
+      socket = IO.io(
+        "https://nestchatbackend-production.up.railway.app",
+        IO.OptionBuilder()
+            .setExtraHeaders({'senderid': widget.userId}) // optional
+            .build(),
+      );
+    } else {
+      socket = IO.io(
+        "https://nestchatbackend-production.up.railway.app",
+        IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
+                {'senderid': widget.userId}) // optional
+            .build(),
+      );
+    }
+
     socket.connect();
     socket.onConnect((_) {
       print(socket.connected);
