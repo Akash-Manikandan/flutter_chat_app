@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 addStringToSF(String info) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  var res = jsonDecode(info);
+  prefs.setString("userId", res["userId"]);
   prefs.setString('userDetails', info);
 }
 

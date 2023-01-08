@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/chats/chats.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_chat_app/homepage/userlist.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -128,6 +131,7 @@ class _HomePageState extends State<HomePage> {
     }
   ];
   bool oneselected = false;
+
   void onChange() {
     setState(() {
       oneselected = !oneselected;
@@ -138,6 +142,42 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Remove String
     prefs.remove("userDetails");
+  }
+
+  String? userD;
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userD = prefs.getString('userId');
+    if (userD != null) {
+    } else {
+      widget.onAuthStateChange(false);
+    }
+  }
+
+  late IO.Socket socket;
+  @override
+  initState() {
+    getStringValuesSF();
+    initSocket();
+    super.initState();
+  }
+
+  initSocket() {
+    socket = IO.io(
+      "https://nestchatbackend-production.up.railway.app",
+      IO.OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
+
+          .setExtraHeaders({'senderid': userD}) // optional
+          .build(),
+    );
+    socket.connect();
+    socket.onConnect((_) {
+      print(socket.connected);
+      print('Connection established');
+    });
+    socket.onDisconnect((_) => print('Connection Disconnection'));
+    socket.onConnectError((err) => print(err));
+    socket.onError((err) => print(err));
   }
 
   @override

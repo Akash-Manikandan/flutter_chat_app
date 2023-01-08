@@ -43,6 +43,7 @@ dependencies:
   fab_circular_menu: ^1.0.2
   http: ^0.13.5
   shared_preferences: ^2.0.15
+  socket_io_client: ^2.0.0
 
 
 
