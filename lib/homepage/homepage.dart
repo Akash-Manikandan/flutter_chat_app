@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
     });
     socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
         ack: (data) {
-      //print(data);
+      // print(data);
       setState(() {
         userList = data;
       });
@@ -246,12 +246,16 @@ class _HomePageState extends State<HomePage> {
                           child: UserList(
                             id: each["id"],
                             name: each["groupName"],
-                            lastMsg: each["messages"][0]["content"],
-                            time: DateFormat.jm().format(
-                              DateTime.parse(
-                                each["messages"][0]["createdAt"],
-                              ).toLocal(),
-                            ),
+                            lastMsg: (each["messages"].length != 0)
+                                ? each["messages"][0]["content"]
+                                : "",
+                            time: (each["messages"].length != 0)
+                                ? DateFormat.jm().format(
+                                    DateTime.parse(
+                                      each["messages"][0]["createdAt"],
+                                    ).toLocal(),
+                                  )
+                                : "",
                             count: 0,
                             onChange: onChange,
                             oneselected: oneselected,
