@@ -6,6 +6,7 @@ import 'package:flutter_chat_app/homepage/homepage.dart';
 import 'package:flutter_chat_app/login.dart';
 import 'package:flutter_chat_app/settings/settings.dart';
 import 'package:flutter_chat_app/themecolors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -67,6 +68,22 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? stringValue = prefs.getString('userDetails');
+    if (stringValue != null) {
+      onAuthStateChange(true);
+    } else {
+      onAuthStateChange(false);
+    }
+  }
+
+  @override
+  initState() {
+    getStringValuesSF();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 opacity: !isClicked ? 1 : 0.5,
                 child: HomePage(
                   isClicked: isClicked,
+                  onAuthStateChange: onAuthStateChange,
                 ),
               ),
             ),

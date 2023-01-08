@@ -5,11 +5,16 @@ import 'package:flutter_chat_app/homepage/userlist.dart';
 
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.isClicked});
+  const HomePage({
+    super.key,
+    required this.isClicked,
+    required this.onAuthStateChange,
+  });
   final bool isClicked;
-
+  final Function onAuthStateChange;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -129,6 +134,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  removeValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Remove String
+    prefs.remove("userDetails");
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -150,13 +161,39 @@ class _HomePageState extends State<HomePage> {
                   left: 6.0,
                   top: 6.0,
                 ),
-                child: Text(
-                  "Chats",
-                  style: TextStyle(
-                    color: ThemeColors.topTextColorLight,
-                    fontSize: 24,
-                    fontFamily: ThemeColors.fontFamily,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Chats",
+                      style: TextStyle(
+                        color: ThemeColors.topTextColorLight,
+                        fontSize: 24,
+                        fontFamily: ThemeColors.fontFamily,
+                      ),
+                    ),
+                    Tooltip(
+                      message: "Logout",
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () async {
+                            await removeValues();
+                            widget.onAuthStateChange(false);
+                          },
+                          child: const SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Icon(
+                              Icons.logout_outlined,
+                              color: ThemeColors.topTextColorLight,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               const Gap(20),
