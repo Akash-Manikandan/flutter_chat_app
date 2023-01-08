@@ -82,6 +82,7 @@ class _ChartsState extends State<Charts> {
                   widget.socket.emitWithAck("leaveRoom", {"groupId": widget.id},
                       ack: (payload) {
                     // print(payload);
+                    print("payload");
                   });
                   Navigator.of(context).pop();
                 },
