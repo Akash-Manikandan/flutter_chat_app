@@ -89,6 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
     fabKey.currentState?.close();
   }
 
+  removeValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Remove String
+    prefs.remove("userDetails");
+    prefs.remove('userId');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,7 +169,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
                   children: <Widget>[
                     RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await removeValues();
+                        onAuthStateChange(false);
+                        isClicked = false;
+                      },
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),
                       child: const Tooltip(

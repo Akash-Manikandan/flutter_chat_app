@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -114,12 +112,10 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 6.0,
-                  top: 6.0,
-                ),
+                padding: const EdgeInsets.fromLTRB(6, 6, 6, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "Chats",
@@ -129,26 +125,19 @@ class _HomePageState extends State<HomePage> {
                         fontFamily: ThemeColors.fontFamily,
                       ),
                     ),
-                    Tooltip(
-                      message: "Logout",
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () async {
-                            await removeValues();
-                            widget.onAuthStateChange(false);
-                          },
-                          child: const SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.logout_outlined,
-                              color: ThemeColors.topTextColorLight,
-                              size: 30,
-                            ),
-                          ),
-                        ),
+                    IconButton(
+                      iconSize: 30,
+                      splashRadius: 30,
+                      tooltip: "Logout",
+                      icon: const Icon(
+                        Icons.logout_outlined,
+                        color: ThemeColors.topTextColorLight,
                       ),
+                      onPressed: () async {
+                        await removeValues();
+                        socket.disconnect();
+                        widget.onAuthStateChange(false);
+                      },
                     )
                   ],
                 ),
