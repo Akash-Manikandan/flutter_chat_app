@@ -1,8 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/addgroup/userlistwithouthero.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import '../main.dart';
 
 class AddGroup extends StatefulWidget {
   const AddGroup({super.key});
@@ -12,114 +21,29 @@ class AddGroup extends StatefulWidget {
 }
 
 class _AddGroupState extends State<AddGroup> {
-  Set<String> list = {};
-  List<Map<String, dynamic>> userList = [
-    {
-      "id": "Karthi1",
-      "name": "Karthi",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Aishwarya2",
-      "name": "Aishwarya",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Akash3",
-      "name": "Akash",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Karthi4",
-      "name": "Karthi",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Aishwarya5",
-      "name": "Aishwarya",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Akash6",
-      "name": "Akash",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Karthi7",
-      "name": "Karthi",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Aishwarya8",
-      "name": "Aishwarya",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Akash9",
-      "name": "Akash",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Karthi10",
-      "name": "Karthi",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Aishwarya11",
-      "name": "Aishwarya",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Akash12",
-      "name": "Akash",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Karthi13",
-      "name": "Karthi",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Aishwarya15",
-      "name": "Aishwarya",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
-    },
-    {
-      "id": "Akash16",
-      "name": "Akash",
-      "lastMsg": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 0,
+  String stringValue = "";
+  Future<dynamic> fetchAlbum() async {
+    // dynamic data = null;
+    final response = await http.get(
+      Uri.parse(
+          "https://nestchatbackend-production.up.railway.app/user/fetchAllUsers"),
+    );
+    // if (response.statusCode == 200) {
+    //   setState(() {});
+    // } else {
+    //   throw Exception('Failed to load statistics');
+    // }
+    if (response.statusCode == 200) {
+      setState(() {
+        userList = jsonDecode(response.body);
+      });
     }
-  ];
+    // print(data);
+    // return data;
+  }
+
+  Set<String> list = {};
+  List<dynamic> userList = [];
   void addValue(String id) {
     setState(() {
       list.add(id);
@@ -130,6 +54,48 @@ class _AddGroupState extends State<AddGroup> {
     setState(() {
       list.remove(id);
     });
+  }
+
+  late IO.Socket socket;
+  @override
+  void initState() {
+    initSocket();
+    super.initState();
+
+    fetchAlbum();
+  }
+
+  initSocket() {
+    if (kIsWeb) {
+      socket = IO.io(
+        "https://nestchatbackend-production.up.railway.app",
+        IO.OptionBuilder()
+            .setExtraHeaders({'senderid': stringValue}) // optional
+            .build(),
+      );
+    } else {
+      socket = IO.io(
+        "https://nestchatbackend-production.up.railway.app",
+        IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
+                {'senderid': stringValue}) // optional
+            .build(),
+      );
+    }
+
+    socket.connect();
+    socket.onConnect((_) {
+      //print(socket.connected);
+      print('Connection established');
+    });
+
+    socket.onDisconnect((_) => print('Connection Disconnection'));
+    socket.onConnectError((err) => print(err));
+    socket.onError((err) => print(err));
+  }
+
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    stringValue = prefs.getString('userId')!;
   }
 
   @override
@@ -165,7 +131,23 @@ class _AddGroupState extends State<AddGroup> {
                     right: 12.0,
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await getStringValuesSF();
+                      // print(
+                      //   list.add(stringValue),
+                      // );
+                      // print(list);
+                      // list.toList();
+                      // print(list.toList());
+                      socket.emitWithAck('createGroup', {
+                        "userIds": list.toList(),
+                        "grpName": "sampledfefefeGrpefdffg"
+                      }, ack: (data) {
+                        print(data);
+
+                        Navigator.pop(context, true);
+                      });
+                    },
                     tooltip: "Add new group",
                     icon: const Icon(
                       CupertinoIcons.add_circled,
@@ -182,11 +164,15 @@ class _AddGroupState extends State<AddGroup> {
             ...userList.map(
               (each) {
                 return UserListWithoutHero(
-                  name: each["name"],
+                  name: each["username"],
                   id: each["id"],
-                  lastMsg: each["lastMsg"],
-                  time: each["time"],
-                  count: each["count"],
+                  lastMsg: "",
+                  time: DateFormat.jm().format(
+                    DateTime.parse(
+                      each["createdAt"],
+                    ).toLocal(),
+                  ),
+                  count: 0,
                   listAdd: addValue,
                   listRemove: removeValue,
                   lcount: list.length,
