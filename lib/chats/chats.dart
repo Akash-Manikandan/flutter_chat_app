@@ -31,12 +31,12 @@ class _ChartsState extends State<Charts> {
   void initState() {
     widget.socket.emitWithAck("joinRoom", {"groupId": widget.id},
         ack: (payload) {
-      print(payload);
+      // print(payload);
     });
     widget.socket.emitWithAck(
         "fetchAllMessages", {"groupId": widget.id, "userId": widget.id},
         ack: (payload) {
-      print(payload);
+      //print(payload);
       setState(() {
         msgList = payload["allMessages"];
       });
