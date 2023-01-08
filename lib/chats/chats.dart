@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/chats/description.dart';
 import 'package:flutter_chat_app/themecolors.dart';
@@ -13,8 +14,8 @@ class Charts extends StatefulWidget {
     super.key,
     required this.name,
     required this.id,
-    required this.socket,
     required this.userId,
+    required this.socket,
   });
   final String name;
   final String id;
@@ -27,8 +28,11 @@ class Charts extends StatefulWidget {
 class _ChartsState extends State<Charts> {
   List<dynamic> msgList = [];
   final TextEditingController _message = TextEditingController();
+  late Socket socket;
   @override
   void initState() {
+    super.initState();
+
     widget.socket.emitWithAck("joinRoom", {"groupId": widget.id},
         ack: (payload) {
       // print(payload);
@@ -42,11 +46,12 @@ class _ChartsState extends State<Charts> {
       });
     });
     widget.socket.on("chatToClient", (data) {
-      setState(() {
-        msgList.add(data);
-      });
+      if (mounted) {
+        setState(() {
+          msgList.add(data);
+        });
+      }
     });
-    super.initState();
   }
 
   @override

@@ -234,8 +234,8 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) => Charts(
                                         name: each["groupName"],
                                         id: each["id"],
-                                        socket: socket,
                                         userId: widget.userId,
+                                        socket: socket,
                                       ),
                                     ),
                                   );
