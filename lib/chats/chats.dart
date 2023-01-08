@@ -15,11 +15,10 @@ class Charts extends StatefulWidget {
     required this.name,
     required this.id,
     required this.userId,
-    required this.socket,
   });
   final String name;
   final String id;
-  final Socket socket;
+
   final String? userId;
   @override
   State<Charts> createState() => _ChartsState();
@@ -32,12 +31,24 @@ class _ChartsState extends State<Charts> {
   @override
   void initState() {
     super.initState();
-
-    widget.socket.emitWithAck("joinRoom", {"groupId": widget.id},
-        ack: (payload) {
+    if (kIsWeb) {
+      socket = io(
+        "https://nestchatbackend-production.up.railway.app",
+        OptionBuilder().setExtraHeaders({'senderid': widget.userId}) // optional
+            .build(),
+      );
+    } else {
+      socket = io(
+        "https://nestchatbackend-production.up.railway.app",
+        OptionBuilder().setTransports(['websocket']).setExtraHeaders(
+                {'senderid': widget.userId}) // optional
+            .build(),
+      );
+    }
+    socket.emitWithAck("joinRoom", {"groupId": widget.id}, ack: (payload) {
       // print(payload);
     });
-    widget.socket.emitWithAck(
+    socket.emitWithAck(
         "fetchAllMessages", {"groupId": widget.id, "userId": widget.id},
         ack: (payload) {
       //print(payload);
@@ -45,7 +56,7 @@ class _ChartsState extends State<Charts> {
         msgList = payload["allMessages"];
       });
     });
-    widget.socket.on("chatToClient", (data) {
+    socket.on("chatToClient", (data) {
       if (mounted) {
         setState(() {
           msgList.add(data);
@@ -79,7 +90,7 @@ class _ChartsState extends State<Charts> {
                   child: Icon(Icons.arrow_back_ios),
                 ),
                 onTap: () {
-                  widget.socket.emitWithAck("leaveRoom", {"groupId": widget.id},
+                  socket.emitWithAck("leaveRoom", {"groupId": widget.id},
                       ack: (payload) {
                     // print(payload);
                   });
@@ -239,7 +250,7 @@ class _ChartsState extends State<Charts> {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () {
-                      widget.socket.emitWithAck(
+                      socket.emitWithAck(
                           "chatToServer",
                           {
                             "userId": widget.userId,

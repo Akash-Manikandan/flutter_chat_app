@@ -235,7 +235,6 @@ class _HomePageState extends State<HomePage> {
                                         name: each["groupName"],
                                         id: each["id"],
                                         userId: widget.userId,
-                                        socket: socket,
                                       ),
                                     ),
                                   );
