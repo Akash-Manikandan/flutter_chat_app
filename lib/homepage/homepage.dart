@@ -122,6 +122,12 @@ class _HomePageState extends State<HomePage> {
       "count": 4,
     }
   ];
+  bool oneselected = false;
+  void onChange() {
+    setState(() {
+      oneselected = !oneselected;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,6 +251,8 @@ class _HomePageState extends State<HomePage> {
                             lastMsg: each["lastMsg"],
                             time: each["time"],
                             count: each["count"],
+                            onChange: onChange,
+                            oneselected: oneselected,
                           ),
                         ),
                       ),

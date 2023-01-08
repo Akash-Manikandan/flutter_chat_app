@@ -197,71 +197,72 @@ class _ChartsState extends State<Charts> {
               ),
             ),
             const Gap(5),
-            Row(
-              children: [
-                Hero(
-                  tag: widget.id,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Description(
-                              id: widget.id,
-                              name: widget.name,
-                            ),
-                          ),
-                        );
-                      },
+            Hero(
+              tag: widget.id,
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Description(
+                          id: widget.id,
+                          name: widget.name,
+                        ),
+                      ),
+                    );
+                  },
+                  radius: 22,
+                  child: Container(
+                    width: 44,
+                    padding: const EdgeInsets.all(3),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ThemeColors.mainThemeLight,
+                    ),
+                    child: CircleAvatar(
                       radius: 22,
-                      child: Container(
-                        width: 44,
-                        padding: const EdgeInsets.all(3),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ThemeColors.mainThemeLight,
-                        ),
-                        child: CircleAvatar(
-                          radius: 22,
-                          backgroundColor: Colors.transparent,
-                          child: SvgPicture.string(
-                            Jdenticon.toSvg(widget.id),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
+                      backgroundColor: Colors.transparent,
+                      child: SvgPicture.string(
+                        Jdenticon.toSvg(widget.id),
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),
                 ),
-                const Gap(12),
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Description(
-                            id: widget.id,
-                            name: widget.name,
-                          ),
+              ),
+            ),
+            const Gap(12),
+            Expanded(
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Description(
+                          id: widget.id,
+                          name: widget.name,
                         ),
-                      );
-                    },
-                    child: Tooltip(
-                      message: widget.name,
-                      child: Text(
-                        widget.name,
-                        style: TextStyle(
-                          fontFamily: ThemeColors.fontFamily,
-                        ),
+                      ),
+                    );
+                  },
+                  child: Tooltip(
+                    message: widget.name,
+                    child: Text(
+                      widget.name,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontFamily: ThemeColors.fontFamily,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
