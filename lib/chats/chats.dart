@@ -78,7 +78,13 @@ class _ChartsState extends State<Charts> {
                   message: "Back",
                   child: Icon(Icons.arrow_back_ios),
                 ),
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () {
+                  widget.socket.emitWithAck("leaveRoom", {"groupId": widget.id},
+                      ack: (payload) {
+                    // print(payload);
+                  });
+                  Navigator.of(context).pop();
+                },
               ),
             ),
             const Gap(5),
