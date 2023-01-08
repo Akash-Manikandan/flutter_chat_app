@@ -16,10 +16,12 @@ class HomePage extends StatefulWidget {
     required this.isClicked,
     required this.onAuthStateChange,
     required this.closeNavigation,
+    required this.userId,
   });
   final bool isClicked;
   final Function onAuthStateChange;
   final Function closeNavigation;
+  final String? userId;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -144,12 +146,14 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Remove String
     prefs.remove("userDetails");
+    prefs.remove('userId');
   }
 
   String? userD;
   getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userD = prefs.getString('userId');
+
     if (userD != null) {
     } else {
       widget.onAuthStateChange(false);
@@ -159,7 +163,6 @@ class _HomePageState extends State<HomePage> {
   late IO.Socket socket;
   @override
   initState() {
-    getStringValuesSF();
     initSocket();
     super.initState();
   }
@@ -167,9 +170,8 @@ class _HomePageState extends State<HomePage> {
   initSocket() {
     socket = IO.io(
       "https://nestchatbackend-production.up.railway.app",
-      IO.OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
-
-          .setExtraHeaders({'senderid': userD}) // optional
+      IO.OptionBuilder()
+          .setExtraHeaders({'senderid': widget.userId}) // optional
           .build(),
     );
     socket.connect();

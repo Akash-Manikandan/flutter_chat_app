@@ -68,9 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String? stringValue;
   getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? stringValue = prefs.getString('userDetails');
+    stringValue = prefs.getString('userId');
     if (stringValue != null) {
       onAuthStateChange(true);
     } else {
@@ -112,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   isClicked: isClicked,
                   onAuthStateChange: onAuthStateChange,
                   closeNavigation: closeNavigation,
+                  userId: stringValue,
                 ),
               ),
             ),
