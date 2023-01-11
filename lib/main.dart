@@ -81,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   initState() {
-    getStringValuesSF();
     super.initState();
+    getStringValuesSF();
   }
 
   void closeNavigation() {
