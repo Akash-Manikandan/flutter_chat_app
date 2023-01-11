@@ -172,8 +172,10 @@ class _AddGroupState extends State<AddGroup> {
                                   "grpName": _name.text
                                 }, ack: (data) {
                                   print(data);
-
-                                  Navigator.pop(context, true);
+                                  int count = 0;
+                                  Navigator.popUntil(context, (route) {
+                                    return count++ == 2;
+                                  });
                                 });
 
                                 // Navigator.pop(context, 'OK');
@@ -182,7 +184,7 @@ class _AddGroupState extends State<AddGroup> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pop(context, 'Cancel');
+                                Navigator.pop(context);
                               },
                               child: const Text('Cancel'),
                             ),
