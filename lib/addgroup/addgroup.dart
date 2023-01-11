@@ -21,6 +21,7 @@ class AddGroup extends StatefulWidget {
 }
 
 class _AddGroupState extends State<AddGroup> {
+  final TextEditingController _name = TextEditingController();
   String stringValue = "";
   Future<dynamic> fetchAlbum() async {
     // dynamic data = null;
@@ -132,6 +133,62 @@ class _AddGroupState extends State<AddGroup> {
                   ),
                   child: IconButton(
                     onPressed: () async {
+                      showDialog<String>(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Create Group'),
+                          content: TextField(
+                            controller: _name,
+                            onChanged: (value) {
+                              setState(() {});
+                              print(_name.text);
+                            },
+                            decoration: const InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ThemeColors.mainThemeLight,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ThemeColors.mainThemeLight,
+                                ),
+                              ),
+                            ),
+                            cursorColor: ThemeColors.topTextColorLight,
+                            cursorHeight: 26,
+                            style: TextStyle(
+                              color: ThemeColors.topTextColorLight,
+                              fontSize: 16,
+                              fontFamily: ThemeColors.fontFamily,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                socket.emitWithAck('createGroup', {
+                                  "userIds": list.toList(),
+                                  "grpName": _name.text
+                                }, ack: (data) {
+                                  print(data);
+
+                                  Navigator.pop(context, true);
+                                });
+
+                                // Navigator.pop(context, 'OK');
+                              },
+                              child: const Text('Create'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                          ],
+                        ),
+                      );
                       await getStringValuesSF();
                       // print(
                       //   list.add(stringValue),
@@ -139,14 +196,6 @@ class _AddGroupState extends State<AddGroup> {
                       // print(list);
                       // list.toList();
                       // print(list.toList());
-                      socket.emitWithAck('createGroup', {
-                        "userIds": list.toList(),
-                        "grpName": "sampledfefefeGrpefdffg"
-                      }, ack: (data) {
-                        print(data);
-
-                        Navigator.pop(context, true);
-                      });
                     },
                     tooltip: "Add new group",
                     icon: const Icon(
