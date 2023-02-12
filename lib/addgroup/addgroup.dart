@@ -22,6 +22,7 @@ class AddGroup extends StatefulWidget {
 
 class _AddGroupState extends State<AddGroup> {
   final TextEditingController _name = TextEditingController();
+
   String stringValue = "";
   Future<dynamic> fetchAlbum() async {
     // dynamic data = null;
@@ -48,6 +49,7 @@ class _AddGroupState extends State<AddGroup> {
   void addValue(String id) {
     setState(() {
       list.add(id);
+      print(list);
     });
   }
 
@@ -167,6 +169,8 @@ class _AddGroupState extends State<AddGroup> {
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
+                                list.add(stringValue);
+                                print(list);
                                 socket.emitWithAck('createGroup', {
                                   "userIds": list.toList(),
                                   "grpName": _name.text
@@ -177,7 +181,9 @@ class _AddGroupState extends State<AddGroup> {
                                     return count++ == 2;
                                   });
                                 });
-
+                                socket.on('exception', (data) {
+                                  print(data);
+                                });
                                 // Navigator.pop(context, 'OK');
                               },
                               child: const Text('Create'),
