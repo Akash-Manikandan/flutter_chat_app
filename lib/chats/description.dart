@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/chats/userlistdesc.dart';
 import 'package:flutter_chat_app/themecolors.dart';
@@ -6,39 +7,87 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:readmore/readmore.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class Description extends StatefulWidget {
-  const Description({super.key, required this.id, required this.name});
+  const Description(
+      {super.key, required this.id, required this.name, required this.uid});
   final String id;
   final String name;
+  final String? uid;
   @override
   State<Description> createState() => _DescriptionState();
 }
 
 class _DescriptionState extends State<Description> {
-  List<Map<String, dynamic>> userList = [
-    {
-      "id": "Karthi",
-      "name": "Karthi",
-      "message": "Hello, Good Morning",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-    {
-      "id": "Aishwarya",
-      "name": "Aishwarya",
-      "message": "Hello, Morning",
-      "time": "11:47 PM",
-      "count": 7,
-    },
-    {
-      "id": "Akash",
-      "name": "Akash",
-      "message": "Bye",
-      "time": "11:47 PM",
-      "count": 4,
-    },
-  ];
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    initSocket();
+    super.initState();
+    descController.text = descVal;
+  }
+
+  initSocket() {
+    if (kIsWeb) {
+      socket = IO.io(
+        "https://nestchatbackend-production.up.railway.app",
+        IO.OptionBuilder().setExtraHeaders({'senderid': widget.uid}) // optional
+            .build(),
+      );
+    } else {
+      socket = IO.io(
+        "https://nestchatbackend-production.up.railway.app",
+        IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
+                {'senderid': widget.uid}) // optional
+            .build(),
+      );
+    }
+
+    socket.connect();
+    socket.onConnect((_) {
+      //print(socket.connected);
+      print('Connection established');
+    });
+    socket.emitWithAck('fetchUsers', {"groupId": widget.id}, ack: (data) {
+      // print(data);
+      setState(() {
+        userList = data["user"];
+      });
+    });
+    socket.onDisconnect((_) => print('Connection Disconnection'));
+    socket.onConnectError((err) => print(err));
+    socket.onError((err) => print(err));
+  }
+
+  List<dynamic> userList = [];
+  // {
+  //   "id": "Karthi",
+  //   "name": "Karthi",
+  //   "message": "Hello, Good Morning",
+  //   "time": "11:47 PM",
+  //   "count": 4,
+  // },
+  // {
+  //   "id": "Aishwarya",
+  //   "name": "Aishwarya",
+  //   "message": "Hello, Morning",
+  //   "time": "11:47 PM",
+  //   "count": 7,
+  // },
+  // {
+  //   "id": "Akash",
+  //   "name": "Akash",
+  //   "message": "Bye",
+  //   "time": "11:47 PM",
+  //   "count": 4,
+  // },
+  // ];
+  bool isEdit = false;
+  // ? descVal from db
+  String descVal = "hello how are you";
+  TextEditingController descController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -149,32 +198,78 @@ class _DescriptionState extends State<Description> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        "Description",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: ThemeColors.fontFamily,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Description",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: ThemeColors.fontFamily,
+                            ),
+                          ),
+                          (!isEdit)
+                              ? IconButton(
+                                  tooltip: "Edit Description",
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () {
+                                    setState(() {
+                                      isEdit = !isEdit;
+                                    });
+                                  },
+                                )
+                              : IconButton(
+                                  tooltip: "Submit",
+                                  icon: const Icon(
+                                      CupertinoIcons.checkmark_alt_circle),
+                                  onPressed: () {
+                                    setState(() {
+                                      // ? Call addDesc ws
+                                      isEdit = !isEdit;
+                                      // print("editing");
+                                    });
+                                  },
+                                ),
+                        ],
                       ),
                       const Gap(20),
-                      ReadMoreText(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit",
-                        trimLines: 3,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: "Read more",
-                        trimExpandedText: "...Show less",
-                        moreStyle: const TextStyle(
-                          color: ThemeColors.topTextColorLight,
-                        ),
-                        lessStyle: const TextStyle(
-                          color: ThemeColors.topTextColorLight,
-                        ),
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: ThemeColors.fontFamily,
-                        ),
-                      ),
+                      (isEdit)
+                          ? TextField(
+                              autofocus: true,
+                              maxLength: 35,
+                              controller: descController,
+                              style: const TextStyle(
+                                color: ThemeColors.topTextColorLight,
+                              ),
+                              decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: ThemeColors.mainThemeLight,
+                                  ),
+                                ),
+                              ),
+                              onChanged: (text) => {
+                                setState(() => {descVal = text})
+                              },
+                            )
+                          : ReadMoreText(
+                              descVal,
+                              trimLines: 3,
+                              trimMode: TrimMode.Line,
+                              trimCollapsedText: "Read more",
+                              trimExpandedText: "...Show less",
+                              moreStyle: const TextStyle(
+                                color: ThemeColors.topTextColorLight,
+                              ),
+                              lessStyle: const TextStyle(
+                                color: ThemeColors.topTextColorLight,
+                              ),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: ThemeColors.fontFamily,
+                              ),
+                            ),
                     ],
                   ),
                 ),
@@ -186,9 +281,9 @@ class _DescriptionState extends State<Description> {
                           .map(
                             (each) => UserListDesc(
                               id: each["id"],
-                              name: each["name"],
-                              lastMsg: each["message"],
-                              time: each["time"],
+                              name: each["username"],
+                              lastMsg: "",
+                              time: "",
                             ),
                           )
                           .toList()

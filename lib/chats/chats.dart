@@ -112,6 +112,7 @@ class _ChartsState extends State<Charts> {
                         builder: (context) => Description(
                           id: widget.id,
                           name: widget.name,
+                          uid: widget.userId,
                         ),
                       ),
                     );
@@ -148,6 +149,7 @@ class _ChartsState extends State<Charts> {
                         builder: (context) => Description(
                           id: widget.id,
                           name: widget.name,
+                          uid: widget.userId,
                         ),
                       ),
                     );
