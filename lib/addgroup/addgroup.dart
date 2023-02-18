@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import '../main.dart';
+// import '../main.dart';
 
 class AddGroup extends StatefulWidget {
   const AddGroup({super.key});
@@ -25,10 +25,13 @@ class _AddGroupState extends State<AddGroup> {
 
   String stringValue = "";
   Future<dynamic> fetchAlbum() async {
-    // dynamic data = null;
+    if (stringValue == "") {
+      await getStringValuesSF();
+    }
     final response = await http.get(
       Uri.parse(
-          "https://nestchatbackend-production.up.railway.app/user/fetchAllUsers"),
+        "https://nestchatbackend-production.up.railway.app/user/fetchAllUsers/$stringValue",
+      ),
     );
     // if (response.statusCode == 200) {
     //   setState(() {});
@@ -113,7 +116,7 @@ class _AddGroupState extends State<AddGroup> {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 child: const Icon(Icons.arrow_back_ios),
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => Navigator.pop(context, true),
               ),
             ),
             const Gap(10),

@@ -57,8 +57,8 @@ class _HomePageState extends State<HomePage> {
   late IO.Socket socket;
   @override
   initState() {
-    initSocket();
     super.initState();
+    initSocket();
   }
 
   initSocket() {

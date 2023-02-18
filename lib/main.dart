@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Route _createRoute() {
+Route _createRoute(String? str) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const AddGroup(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -223,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         fabKey.currentState?.close();
                         Navigator.of(context).push(
-                          _createRoute(),
+                          _createRoute(stringValue),
                         );
                       },
                       shape: const CircleBorder(),
