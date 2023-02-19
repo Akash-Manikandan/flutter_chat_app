@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,7 @@ class _ChartsState extends State<Charts> {
   List<dynamic> msgList = [];
   final TextEditingController _message = TextEditingController();
   late Socket socket;
+  List<String> typer = [];
   @override
   void initState() {
     super.initState();
@@ -51,7 +54,22 @@ class _ChartsState extends State<Charts> {
       // print(payload);
     });
     socket.on("typing", (data) {
-      print(data);
+      if (data["isTyping"] == true) {
+        if (!typer.contains(data["userId"])) {
+          if (mounted) {
+            setState(() {
+              typer.add(data["userId"]);
+            });
+          }
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            typer.remove(data["userId"]);
+          });
+        }
+      }
+      print(typer);
     });
     socket.emitWithAck(
         "fetchAllMessages", {"groupId": widget.id, "userId": widget.userId},
@@ -78,6 +96,12 @@ class _ChartsState extends State<Charts> {
         {"groupId": widget.id, "userId": widget.userId, "isTyping": true},
       );
     }
+    Future.delayed(const Duration(seconds: 2), () {
+      socket.emit(
+        "typing",
+        {"groupId": widget.id, "userId": widget.userId, "isTyping": false},
+      );
+    });
   }
 
   @override
@@ -467,9 +491,58 @@ class _ChartsState extends State<Charts> {
                   ),
                 )
                 .toList(),
-            JumpingDotsProgressIndicator(
-              fontSize: 80.0,
-              color: ThemeColors.mainThemeLight,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
+              child: SizedBox(
+                width: size.width,
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        children: <Widget>[
+                          ...typer
+                              .map(
+                                (e) => Positioned(
+                                  left: typer.indexOf(e) * 15.0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ThemeColors.profileImageBg,
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                          blurRadius: 5.0,
+                                          offset: Offset(0.0, 3.0),
+                                          color: Colors.grey,
+                                        )
+                                      ],
+                                    ),
+                                    child: CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: Colors.transparent,
+                                      child: SvgPicture.string(
+                                        Jdenticon.toSvg(e),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          // Positioned(
+                          //   left: typer.length * 20,
+                          //   child: JumpingDotsProgressIndicator(
+                          //     fontSize: 80,
+                          //     color: ThemeColors.mainThemeLight,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),
