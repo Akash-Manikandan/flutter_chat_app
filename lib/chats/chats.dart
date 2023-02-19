@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class Charts extends StatefulWidget {
@@ -31,6 +32,7 @@ class _ChartsState extends State<Charts> {
   @override
   void initState() {
     super.initState();
+    _message.addListener(_printLatestValue);
     if (kIsWeb) {
       socket = io(
         "https://nestchatbackend-production.up.railway.app",
@@ -48,8 +50,11 @@ class _ChartsState extends State<Charts> {
     socket.emitWithAck("joinRoom", {"groupId": widget.id}, ack: (payload) {
       // print(payload);
     });
+    socket.on("typing", (data) {
+      print(data);
+    });
     socket.emitWithAck(
-        "fetchAllMessages", {"groupId": widget.id, "userId": widget.id},
+        "fetchAllMessages", {"groupId": widget.id, "userId": widget.userId},
         ack: (payload) {
       //print(payload);
       setState(() {
@@ -63,6 +68,16 @@ class _ChartsState extends State<Charts> {
         });
       }
     });
+  }
+
+  void _printLatestValue() {
+    print('Second text field: ${_message.text} ');
+    if (_message.text.isNotEmpty) {
+      socket.emit(
+        "typing",
+        {"groupId": widget.id, "userId": widget.userId, "isTyping": true},
+      );
+    }
   }
 
   @override
@@ -452,6 +467,10 @@ class _ChartsState extends State<Charts> {
                   ),
                 )
                 .toList(),
+            JumpingDotsProgressIndicator(
+              fontSize: 80.0,
+              color: ThemeColors.mainThemeLight,
+            )
           ],
         ),
       ),
