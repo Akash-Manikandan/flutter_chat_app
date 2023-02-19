@@ -69,7 +69,7 @@ class _ChartsState extends State<Charts> {
           });
         }
       }
-      print(typer);
+      // print(typer);
     });
     socket.emitWithAck(
         "fetchAllMessages", {"groupId": widget.id, "userId": widget.userId},
@@ -89,7 +89,7 @@ class _ChartsState extends State<Charts> {
   }
 
   void _printLatestValue() {
-    print('Second text field: ${_message.text} ');
+    // print('Second text field: ${_message.text} ');
     if (_message.text.isNotEmpty) {
       socket.emit(
         "typing",
@@ -132,7 +132,7 @@ class _ChartsState extends State<Charts> {
                   socket.emitWithAck("leaveRoom", {"groupId": widget.id},
                       ack: (payload) {
                     // print(payload);
-                    print("payload");
+                    // print("payload");
                   });
                   Navigator.of(context).pop();
                 },
