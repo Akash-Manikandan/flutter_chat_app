@@ -12,22 +12,23 @@ import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
-class Charts extends StatefulWidget {
-  const Charts({
+class Chats extends StatefulWidget {
+  const Chats({
     super.key,
     required this.name,
     required this.id,
     required this.userId,
+    required this.updateLastSent,
   });
   final String name;
   final String id;
-
+  final Function updateLastSent;
   final String? userId;
   @override
-  State<Charts> createState() => _ChartsState();
+  State<Chats> createState() => _ChatsState();
 }
 
-class _ChartsState extends State<Charts> {
+class _ChatsState extends State<Chats> {
   List<dynamic> msgList = [];
   final TextEditingController _message = TextEditingController();
   late Socket socket;
@@ -83,6 +84,9 @@ class _ChartsState extends State<Charts> {
       if (mounted) {
         setState(() {
           msgList.insert(0, data);
+
+          widget.updateLastSent(data["groupId"], data["content"],
+              data["createdAt"], data["msgRead"]);
         });
       }
     });
