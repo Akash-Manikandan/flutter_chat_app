@@ -15,12 +15,11 @@ class HomePage extends StatefulWidget {
     required this.isClicked,
     required this.onAuthStateChange,
     required this.closeNavigation,
-    required this.userId,
   });
   final bool isClicked;
   final Function onAuthStateChange;
   final Function closeNavigation;
-  final String? userId;
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -60,42 +59,44 @@ class _HomePageState extends State<HomePage> {
     initSocket();
   }
 
-  initSocket() {
+  initSocket() async {
+    await getStringValuesSF();
     if (kIsWeb) {
       socket = IO.io(
         "https://nestchatbackend-production.up.railway.app",
-        IO.OptionBuilder()
-            .setExtraHeaders({'senderid': widget.userId}) // optional
+        IO.OptionBuilder().setExtraHeaders({'senderid': userD}) // optional
             .build(),
       );
     } else {
       socket = IO.io(
         "https://nestchatbackend-production.up.railway.app",
         IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
-                {'senderid': widget.userId}) // optional
+                {'senderid': userD}) // optional
             .build(),
       );
     }
 
     socket.connect();
-    socket.onConnect((_) {
+    socket.onConnect((_) async {
       //print(socket.connected);
-      print('Connection established');
       if (mounted) {
-        socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
-            ack: (data) {
+        print('Connection established');
+        socket.emitWithAck('fetchAllGroups', {"userId": userD}, ack: (data) {
           setState(() {
             userList = data;
           });
         });
       }
     });
-    socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
-        ack: (data) {
-      // print(data);
-      setState(() {
-        userList = data;
-      });
+    // socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
+    //     ack: (data) {
+    //   // print(data);
+    //   setState(() {
+    //     userList = data;
+    //   });
+    // });
+    socket.on('exception', (data) {
+      print(data);
     });
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
@@ -105,11 +106,24 @@ class _HomePageState extends State<HomePage> {
   updateLastSent(String grpId, String msg, String time, bool read) {
     int index = userList.indexWhere((user) => user["id"] == grpId);
     if (index != -1) {
-      setState(() {
-        userList[index]["messages"][0]["createdAt"] = time;
-        userList[index]["messages"][0]["content"] = msg;
-        userList[index]["messages"][0]["msgRead"] = read;
-      });
+      if (userList[index]["messages"].length > 0) {
+        setState(() {
+          userList[index]["messages"][0]["createdAt"] = time;
+          userList[index]["messages"][0]["content"] = msg;
+          userList[index]["messages"][0]["msgRead"] = read;
+        });
+      } else {
+        setState(() {
+          userList[index]["messages"] = [
+            {
+              "createdAt": time,
+              "content": msg,
+              "msgRead": read,
+              "groupId": grpId,
+            }
+          ];
+        });
+      }
     }
   }
 
@@ -241,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) => Chats(
                                         name: each["groupName"],
                                         id: each["id"],
-                                        userId: widget.userId,
+                                        userId: userD,
                                         updateLastSent: updateLastSent,
                                       ),
                                     ),

@@ -82,7 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   initState() {
     super.initState();
-    getStringValuesSF();
+    getAsync();
+  }
+
+  getAsync() async {
+    await getStringValuesSF();
   }
 
   void closeNavigation() {
@@ -120,7 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   isClicked: isClicked,
                   onAuthStateChange: onAuthStateChange,
                   closeNavigation: closeNavigation,
-                  userId: stringValue,
                 ),
               ),
             ),

@@ -185,7 +185,7 @@ class _LoginState extends State<Login> {
                           // print(result);
                           if (result["verified"] == true) {
                             widget.onAuthStateChange(true);
-                            addStringToSF(
+                            await addStringToSF(
                               jsonEncode(result),
                             );
                           } else if (result["statusCode"] == 400) {
