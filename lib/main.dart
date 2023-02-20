@@ -177,9 +177,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),
                       child: const Tooltip(
-                        message: "Dummy",
+                        message: "Developer Information",
                         child: Icon(
-                          Icons.people_alt_rounded,
+                          CupertinoIcons.text_bubble,
                           color: ThemeColors.topTextColorLight,
                           size: 40,
                         ),
