@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/chats/chats.dart';
 import 'package:flutter_chat_app/homepage/userlist.dart';
-
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
@@ -85,7 +84,6 @@ class _HomePageState extends State<HomePage> {
       if (mounted) {
         socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
             ack: (data) {
-          print(data);
           setState(() {
             userList = data;
           });
@@ -102,6 +100,17 @@ class _HomePageState extends State<HomePage> {
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
     socket.onError((err) => print(err));
+  }
+
+  updateLastSent(String grpId, String msg, String time, bool read) {
+    int index = userList.indexWhere((user) => user["id"] == grpId);
+    if (index != -1) {
+      setState(() {
+        userList[index]["messages"][0]["createdAt"] = time;
+        userList[index]["messages"][0]["content"] = msg;
+        userList[index]["messages"][0]["msgRead"] = read;
+      });
+    }
   }
 
   @override
@@ -229,10 +238,11 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Charts(
+                                      builder: (context) => Chats(
                                         name: each["groupName"],
                                         id: each["id"],
                                         userId: widget.userId,
+                                        updateLastSent: updateLastSent,
                                       ),
                                     ),
                                   );
