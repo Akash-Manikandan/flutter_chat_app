@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
-import 'package:progress_indicators/progress_indicators.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class Charts extends StatefulWidget {
@@ -69,7 +69,7 @@ class _ChartsState extends State<Charts> {
           });
         }
       }
-      print(typer);
+      // print(typer);
     });
     socket.emitWithAck(
         "fetchAllMessages", {"groupId": widget.id, "userId": widget.userId},
@@ -82,21 +82,21 @@ class _ChartsState extends State<Charts> {
     socket.on("chatToClient", (data) {
       if (mounted) {
         setState(() {
-          msgList.add(data);
+          msgList.insert(0, data);
         });
       }
     });
   }
 
   void _printLatestValue() {
-    print('Second text field: ${_message.text} ');
+    // print('Second text field: ${_message.text} ');
     if (_message.text.isNotEmpty) {
       socket.emit(
         "typing",
         {"groupId": widget.id, "userId": widget.userId, "isTyping": true},
       );
     }
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 5), () {
       socket.emit(
         "typing",
         {"groupId": widget.id, "userId": widget.userId, "isTyping": false},
@@ -132,7 +132,7 @@ class _ChartsState extends State<Charts> {
                   socket.emitWithAck("leaveRoom", {"groupId": widget.id},
                       ack: (payload) {
                     // print(payload);
-                    print("payload");
+                    // print("payload");
                   });
                   Navigator.of(context).pop();
                 },
@@ -292,15 +292,17 @@ class _ChartsState extends State<Charts> {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () {
-                      socket.emitWithAck(
-                          "chatToServer",
-                          {
-                            "userId": widget.userId,
-                            "groupId": widget.id,
-                            "content": _message.text.trim()
-                          },
-                          ack: (payload) {});
-                      _message.clear();
+                      if (_message.text.trim().isNotEmpty) {
+                        socket.emitWithAck(
+                            "chatToServer",
+                            {
+                              "userId": widget.userId,
+                              "groupId": widget.id,
+                              "content": _message.text.trim()
+                            },
+                            ack: (payload) {});
+                        _message.clear();
+                      }
                     },
                     child: Tooltip(
                       message: "Send",
@@ -490,60 +492,78 @@ class _ChartsState extends State<Charts> {
                     ),
                   ),
                 )
-                .toList(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
-              child: SizedBox(
-                width: size.width,
-                height: 70,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Stack(
+                .toList()
+                .reversed,
+            (typer.isNotEmpty)
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
+                    child: SizedBox(
+                      width: size.width,
+                      height: 70,
+                      child: Row(
                         children: <Widget>[
-                          ...typer
-                              .map(
-                                (e) => Positioned(
-                                  left: typer.indexOf(e) * 15.0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(3),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: ThemeColors.profileImageBg,
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                          blurRadius: 5.0,
-                                          offset: Offset(0.0, 3.0),
-                                          color: Colors.grey,
-                                        )
-                                      ],
-                                    ),
-                                    child: CircleAvatar(
-                                      radius: 18,
-                                      backgroundColor: Colors.transparent,
-                                      child: SvgPicture.string(
-                                        Jdenticon.toSvg(e),
-                                        fit: BoxFit.contain,
+                          Expanded(
+                            child: Stack(
+                              children: <Widget>[
+                                ...typer
+                                    .map(
+                                      (e) => Positioned(
+                                        left: typer.indexOf(e) * 15.0,
+                                        top: 10,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(3),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: ThemeColors.profileImageBg,
+                                            boxShadow: <BoxShadow>[
+                                              BoxShadow(
+                                                blurRadius: 5.0,
+                                                offset: Offset(0.0, 3.0),
+                                                color: Colors.grey,
+                                              )
+                                            ],
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 18,
+                                            backgroundColor: Colors.transparent,
+                                            child: SvgPicture.string(
+                                              Jdenticon.toSvg(e),
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                        ),
                                       ),
+                                    )
+                                    .toList(),
+                                Positioned(
+                                  // left: typer.length * 35 +
+                                  //     ((typer.length == 1) ? 20 : 0),
+                                  left: typer.length *
+                                      ((typer.length == 1) ? 60 : 40),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: const BoxDecoration(
+                                      color: ThemeColors.lighterShadeTextLight,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                        bottomRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: const JumpingDots(
+                                      color: ThemeColors.mainThemeLight,
+                                      radius: 12,
                                     ),
                                   ),
                                 ),
-                              )
-                              .toList(),
-                          // Positioned(
-                          //   left: typer.length * 20,
-                          //   child: JumpingDotsProgressIndicator(
-                          //     fontSize: 80,
-                          //     color: ThemeColors.mainThemeLight,
-                          //   ),
-                          // ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            )
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
       ),
