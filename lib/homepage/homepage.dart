@@ -82,6 +82,15 @@ class _HomePageState extends State<HomePage> {
     socket.onConnect((_) {
       //print(socket.connected);
       print('Connection established');
+      if (mounted) {
+        socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
+            ack: (data) {
+          print(data);
+          setState(() {
+            userList = data;
+          });
+        });
+      }
     });
     socket.emitWithAck('fetchAllGroups', {"userId": widget.userId},
         ack: (data) {
