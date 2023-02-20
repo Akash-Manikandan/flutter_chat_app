@@ -29,7 +29,6 @@ class _DescriptionState extends State<Description> {
   void initState() {
     initSocket();
     super.initState();
-    descController.text = descVal;
   }
 
   initSocket() {
@@ -63,6 +62,8 @@ class _DescriptionState extends State<Description> {
       // print(data);
       setState(() {
         descVal = data["description"];
+        descController.text = descVal;
+
         // print(descVal);
         if (descVal != null) {
           descIsNull = false;
@@ -304,10 +305,11 @@ class _DescriptionState extends State<Description> {
                       (isEdit)
                           ? TextField(
                               autofocus: true,
-                              maxLength: 35,
+                              maxLength: 50,
                               controller: descController,
-                              style: const TextStyle(
-                                color: ThemeColors.topTextColorLight,
+                              style: TextStyle(
+                                color: ThemeColors.mainThemeLight,
+                                fontFamily: ThemeColors.fontFamily,
                               ),
                               decoration: const InputDecoration(
                                 focusedBorder: OutlineInputBorder(
