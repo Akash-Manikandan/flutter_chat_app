@@ -21,7 +21,10 @@ class Description extends StatefulWidget {
 
 class _DescriptionState extends State<Description> {
   late IO.Socket socket;
-
+  late dynamic descVal = "";
+  bool descIsNull = true;
+  bool isEdit = false;
+  bool isSubmit = false;
   @override
   void initState() {
     initSocket();
@@ -56,6 +59,19 @@ class _DescriptionState extends State<Description> {
         userList = data["user"];
       });
     });
+    socket.emitWithAck('updateGroupDesc', {"groupId": widget.id}, ack: (data) {
+      // print(data);
+      setState(() {
+        descVal = data["description"];
+        // print(descVal);
+        if (descVal != null) {
+          descIsNull = false;
+          // print(descIsNull);
+        }
+      });
+    });
+
+    // socket.on('updateGroupDesc', (args:any) => {});
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
     socket.onError((err) => print(err));
@@ -84,9 +100,7 @@ class _DescriptionState extends State<Description> {
   //   "count": 4,
   // },
   // ];
-  bool isEdit = false;
-  // ? descVal from db
-  String descVal = "hello how are you";
+
   TextEditingController descController = TextEditingController();
 
   @override
@@ -209,28 +223,81 @@ class _DescriptionState extends State<Description> {
                               fontFamily: ThemeColors.fontFamily,
                             ),
                           ),
-                          (!isEdit)
-                              ? IconButton(
-                                  tooltip: "Edit Description",
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () {
-                                    setState(() {
-                                      isEdit = !isEdit;
-                                    });
-                                  },
-                                )
-                              : IconButton(
-                                  tooltip: "Submit",
-                                  icon: const Icon(
-                                      CupertinoIcons.checkmark_alt_circle),
-                                  onPressed: () {
-                                    setState(() {
-                                      // ? Call addDesc ws
-                                      isEdit = !isEdit;
-                                      // print("editing");
-                                    });
-                                  },
-                                ),
+                          (descIsNull)
+                              ? (!isSubmit)
+                                  ? IconButton(
+                                      tooltip: "Add Description",
+                                      icon: const Icon(CupertinoIcons.plus_app),
+                                      onPressed: () {
+                                        setState(() {
+                                          isEdit = !isEdit;
+                                          isSubmit = !isSubmit;
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      tooltip: "Submit",
+                                      icon: const Icon(
+                                          CupertinoIcons.checkmark_alt_circle),
+                                      onPressed: () {
+                                        isSubmit = false;
+                                        isEdit = !isEdit;
+                                        descIsNull = !descIsNull;
+                                        setState(() {
+                                          socket.emitWithAck(
+                                              'updateGroupDesc', {
+                                            "groupId": widget.id,
+                                            "newGroupDesc": descVal
+                                          }, ack: (data) {
+                                            // print(data);
+                                            setState(() {
+                                              descVal = data["description"];
+                                            });
+                                          });
+                                          socket.on('exception', (data) {
+                                            print(data);
+                                          });
+                                          // print("editing");
+                                        });
+                                      },
+                                    )
+                              : (!isEdit && !isSubmit)
+                                  ? IconButton(
+                                      tooltip: "Edit Description",
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () {
+                                        setState(() {
+                                          isEdit = !isEdit;
+                                          isSubmit = true;
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      tooltip: "Submit",
+                                      icon: const Icon(
+                                          CupertinoIcons.checkmark_alt_circle),
+                                      onPressed: () {
+                                        isSubmit = false;
+                                        isEdit = !isEdit;
+
+                                        setState(() {
+                                          socket.emitWithAck(
+                                              'updateGroupDesc', {
+                                            "groupId": widget.id,
+                                            "newGroupDesc": descVal
+                                          }, ack: (data) {
+                                            // print(data);
+                                            setState(() {
+                                              descVal = data["description"];
+                                            });
+                                          });
+                                          socket.on('exception', (data) {
+                                            print(data);
+                                          });
+                                          // print("editing");
+                                        });
+                                      },
+                                    )
                         ],
                       ),
                       const Gap(20),
@@ -253,23 +320,25 @@ class _DescriptionState extends State<Description> {
                                 setState(() => {descVal = text})
                               },
                             )
-                          : ReadMoreText(
-                              descVal,
-                              trimLines: 3,
-                              trimMode: TrimMode.Line,
-                              trimCollapsedText: "Read more",
-                              trimExpandedText: "...Show less",
-                              moreStyle: const TextStyle(
-                                color: ThemeColors.topTextColorLight,
-                              ),
-                              lessStyle: const TextStyle(
-                                color: ThemeColors.topTextColorLight,
-                              ),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: ThemeColors.fontFamily,
-                              ),
-                            ),
+                          : (!descIsNull)
+                              ? ReadMoreText(
+                                  descVal,
+                                  trimLines: 3,
+                                  trimMode: TrimMode.Line,
+                                  trimCollapsedText: "Read more",
+                                  trimExpandedText: "...Show less",
+                                  moreStyle: const TextStyle(
+                                    color: ThemeColors.topTextColorLight,
+                                  ),
+                                  lessStyle: const TextStyle(
+                                    color: ThemeColors.topTextColorLight,
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: ThemeColors.fontFamily,
+                                  ),
+                                )
+                              : Gap(2),
                     ],
                   ),
                 ),
