@@ -170,9 +170,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget>[
                     RawMaterialButton(
                       onPressed: () async {
-                        await removeValues();
-                        onAuthStateChange(false);
-                        isClicked = false;
+                        // await removeValues();
+                        // onAuthStateChange(false);
+                        // isClicked = false;
                       },
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),

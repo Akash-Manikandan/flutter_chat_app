@@ -70,6 +70,7 @@ class _SettingsState extends State<Settings> {
                   ThemeColors.fontFamily = gender;
                 });
               },
+              
             ),
             RadioListTile(
               title: Text(
