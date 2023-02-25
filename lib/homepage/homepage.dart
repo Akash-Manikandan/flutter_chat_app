@@ -63,13 +63,13 @@ class _HomePageState extends State<HomePage> {
     await getStringValuesSF();
     if (kIsWeb) {
       socket = IO.io(
-        "https://nestchatbackend-production.up.railway.app",
+        "https://chat-nest.onrender.com",
         IO.OptionBuilder().setExtraHeaders({'senderid': userD}) // optional
             .build(),
       );
     } else {
       socket = IO.io(
-        "https://nestchatbackend-production.up.railway.app",
+        "https://chat-nest.onrender.com",
         IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
                 {'senderid': userD}) // optional
             .build(),
