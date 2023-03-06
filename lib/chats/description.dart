@@ -25,10 +25,27 @@ class _DescriptionState extends State<Description> {
   bool descIsNull = true;
   bool isEdit = false;
   bool isSubmit = false;
+  late ScrollController _scrollController;
   @override
   void initState() {
     initSocket();
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(scrollListener);
+  }
+
+  bool checkerVar = false;
+  void scrollListener() {
+    if (_scrollController.position.pixels >= 280) {
+      setState(() {
+        checkerVar = true;
+      });
+    } else {
+      checkerVar = false;
+    }
+    // print(
+    //   "px ${_scrollController.position.pixels} ext ${_scrollController.position.maxScrollExtent}",
+    // );
   }
 
   initSocket() {
@@ -108,8 +125,9 @@ class _DescriptionState extends State<Description> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      extendBodyBehindAppBar: true,
       body: CustomScrollView(
+        controller: _scrollController,
+        physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
@@ -166,42 +184,39 @@ class _DescriptionState extends State<Description> {
                 ),
               )
             ],
-            backgroundColor: Colors.transparent,
+            backgroundColor: (checkerVar == true)
+                ? ThemeColors.mainThemeLight
+                : Colors.transparent,
             elevation: 0,
             expandedHeight: size.height * 0.4 + 30,
             flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                children: <Widget>[
-                  Container(
+              collapseMode: CollapseMode.parallax,
+              titlePadding: const EdgeInsets.fromLTRB(52, 0, 0, 16),
+              centerTitle: false,
+              stretchModes: const [StretchMode.zoomBackground],
+              title: SizedBox(
+                width: size.width,
+                child: Text(
+                  widget.name,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: ThemeColors.fontFamily,
+                    color: ThemeColors.topTextColorLight,
+                  ),
+                ),
+              ),
+              background: Container(
+                width: size.width,
+                height: size.height * 0.5,
+                color: ThemeColors.mainThemeLight,
+                child: Hero(
+                  tag: widget.id,
+                  child: SvgPicture.string(
+                    Jdenticon.toSvg(widget.id),
                     width: size.width,
-                    height: size.height * 0.5,
-                    color: ThemeColors.mainThemeLight,
-                    child: Hero(
-                      tag: widget.id,
-                      child: SvgPicture.string(
-                        Jdenticon.toSvg(widget.id),
-                        width: size.width,
-                        height: size.height * 0.4,
-                      ),
-                    ),
+                    height: size.height * 0.4,
                   ),
-                  Positioned(
-                    bottom: 00,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 18.0,
-                      ),
-                      child: Text(
-                        widget.name,
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: ThemeColors.fontFamily,
-                          color: ThemeColors.topTextColorLight,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -287,7 +302,6 @@ class _DescriptionState extends State<Description> {
                                             "groupId": widget.id,
                                             "newGroupDesc": descVal
                                           }, ack: (data) {
-                                            // print(data);
                                             setState(() {
                                               descVal = data["description"];
                                             });
@@ -340,7 +354,7 @@ class _DescriptionState extends State<Description> {
                                     fontFamily: ThemeColors.fontFamily,
                                   ),
                                 )
-                              : Gap(2),
+                              : const Gap(2),
                     ],
                   ),
                 ),
