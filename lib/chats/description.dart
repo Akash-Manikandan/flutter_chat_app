@@ -198,6 +198,9 @@ class _DescriptionState extends State<Description> {
                 width: size.width,
                 child: Text(
                   widget.name,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
                   style: TextStyle(
                     fontSize: 20,
                     fontFamily: ThemeColors.fontFamily,
