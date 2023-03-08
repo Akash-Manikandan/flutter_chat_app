@@ -55,9 +55,7 @@ class _ChatsState extends State<Chats> {
     socket.emitWithAck("joinRoom", {"groupId": widget.id}, ack: (payload) {
       // print(payload);
     });
-    socket.on("left", (data) {
-      // print(data);
-    });
+
     socket.on("typing", (data) {
       if (data["isTyping"] == true) {
         if (!typer.contains(data["userId"])) {
@@ -102,6 +100,11 @@ class _ChatsState extends State<Chats> {
       msgList.clear();
       typer.clear();
     }
+    socket.emitWithAck("leaveRoom", {"groupId": widget.id}, ack: (payload) {
+      print(payload);
+      socket.on("left", (data) {});
+    });
+    print("pop");
     socket.off("chatToClient");
     socket.off("chatToServer");
     socket.off("typing");
@@ -150,11 +153,11 @@ class _ChatsState extends State<Chats> {
                   child: Icon(Icons.arrow_back_ios),
                 ),
                 onTap: () {
-                  socket.emitWithAck("leaveRoom", {"groupId": widget.id},
-                      ack: (payload) {
-                    // print(payload);
-                    // print("payload");
-                  });
+                  // socket.emitWithAck("leaveRoom", {"groupId": widget.id},
+                  //     ack: (payload) {
+                  //   // print(payload);
+                  //   // print("payload");
+                  // });
                   Navigator.of(context).pop();
                 },
               ),
