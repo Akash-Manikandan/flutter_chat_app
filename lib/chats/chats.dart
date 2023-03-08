@@ -518,15 +518,18 @@ class _ChatsState extends State<Chats> {
                 )
                 .toList()
                 .reversed,
-            (typer.isNotEmpty)
-                ? Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
-                    child: SizedBox(
-                      width: size.width,
-                      height: 70,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
+            Align(
+              alignment: Alignment.topLeft,
+              child: AnimatedContainer(
+                padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeIn,
+                width: (typer.isNotEmpty) ? size.width : 0,
+                height: (typer.isNotEmpty) ? 70 : 0,
+                child: Row(
+                  children: <Widget>[
+                    (typer.isNotEmpty)
+                        ? Expanded(
                             child: Stack(
                               children: <Widget>[
                                 ...typer
@@ -567,7 +570,15 @@ class _ChatsState extends State<Chats> {
                                   child: Container(
                                     padding: const EdgeInsets.all(16),
                                     decoration: const BoxDecoration(
-                                      color: ThemeColors.lighterShadeTextLight,
+                                      color: ThemeColors
+                                          .lighterShadeTextLightForShadow,
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                          blurRadius: 4.0,
+                                          offset: Offset(0.0, 3.0),
+                                          color: Colors.grey,
+                                        )
+                                      ],
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
@@ -576,18 +587,18 @@ class _ChatsState extends State<Chats> {
                                     ),
                                     child: const JumpingDots(
                                       color: ThemeColors.mainThemeLight,
-                                      radius: 12,
+                                      radius: 8,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+                          )
+                        : const SizedBox.shrink(),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

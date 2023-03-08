@@ -5,6 +5,7 @@ class ThemeColors {
   static const Color mainThemeLight = Color(0xfe101920);
   static const Color topTextColorLight = Color(0xffedabef);
   static const Color lighterShadeTextLight = Color(0xaaedabef);
+  static const Color lighterShadeTextLightForShadow = Color(0xffedabef);
   static const Color profileImageBg = Color(0xffebf9ff);
   static const Color profileImageBgLightestVersion =
       Color.fromARGB(170, 239, 207, 241);
