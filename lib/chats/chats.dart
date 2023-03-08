@@ -36,6 +36,7 @@ class _ChatsState extends State<Chats> {
   @override
   void initState() {
     super.initState();
+
     _message.addListener(_printLatestValue);
     if (kIsWeb) {
       socket = io(
@@ -53,6 +54,9 @@ class _ChatsState extends State<Chats> {
     }
     socket.emitWithAck("joinRoom", {"groupId": widget.id}, ack: (payload) {
       // print(payload);
+    });
+    socket.on("left", (data) {
+      // print(data);
     });
     socket.on("typing", (data) {
       if (data["isTyping"] == true) {
@@ -90,6 +94,19 @@ class _ChatsState extends State<Chats> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    if (mounted) {
+      msgList.clear();
+      typer.clear();
+    }
+    socket.off("chatToClient");
+    socket.off("chatToServer");
+    socket.off("typing");
+    socket.off("left");
+    super.dispose();
   }
 
   void _printLatestValue() {
