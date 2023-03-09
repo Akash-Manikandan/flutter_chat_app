@@ -20,8 +20,12 @@ class Description extends StatefulWidget {
 }
 
 class _DescriptionState extends State<Description> {
+// final productId = ModalRoute.of(context)!.settings.arguments == null
+//       ? "NULL"
+//       : ModalRoute.of(context)!.settings.arguments as String;
+
   late IO.Socket socket;
-  late dynamic descVal = "";
+  late dynamic descVal;
   bool descIsNull = true;
   bool isEdit = false;
   bool isSubmit = false;
@@ -77,16 +81,19 @@ class _DescriptionState extends State<Description> {
     });
     socket.emitWithAck('updateGroupDesc', {"groupId": widget.id}, ack: (data) {
       // print(data);
-      setState(() {
-        descVal = data["description"];
-        descController.text = descVal;
+      if (mounted) {
+        setState(() {
+          // descVal = data["description"] == null ? "NULL" : data["description"];
+          descVal = data["description"] ?? "";
+          descController.text = descVal;
 
-        // print(descVal);
-        if (descVal != null) {
-          descIsNull = false;
-          // print(descIsNull);
-        }
-      });
+          // print(descVal);
+          if (descVal != null) {
+            descIsNull = false;
+            // print(descIsNull);
+          }
+        });
+      }
     });
 
     // socket.on('updateGroupDesc', (args:any) => {});
@@ -259,60 +266,101 @@ class _DescriptionState extends State<Description> {
                                       icon: const Icon(
                                           CupertinoIcons.checkmark_alt_circle),
                                       onPressed: () {
-                                        isSubmit = false;
-                                        isEdit = !isEdit;
-                                        descIsNull = !descIsNull;
+                                        // descController.text = descController
+                                        //     .text
+                                        //     .toString()
+                                        //     .trim();
+                                        descVal = descVal.toString().trim();
                                         setState(() {
-                                          socket.emitWithAck(
-                                              'updateGroupDesc', {
-                                            "groupId": widget.id,
-                                            "newGroupDesc": descVal
-                                          }, ack: (data) {
-                                            // print(data);
-                                            setState(() {
-                                              descVal = data["description"];
+                                          descVal = descVal.toString().trim();
+                                          if (descVal.length != 0) {
+                                            isSubmit = false;
+                                            isEdit = !isEdit;
+                                            descIsNull = !descIsNull;
+                                            socket.emitWithAck(
+                                                'updateGroupDesc', {
+                                              "groupId": widget.id,
+                                              "newGroupDesc": descVal
+                                            }, ack: (data) {
+                                              // print(data);
+                                              setState(() {
+                                                descVal = data["description"];
+                                              });
                                             });
-                                          });
-                                          socket.on('exception', (data) {
-                                            print(data);
-                                          });
-                                          // print("editing");
+                                            socket.on('exception', (data) {
+                                              print(data);
+                                            });
+                                          } else {
+                                            isSubmit = false;
+                                            isEdit = !isEdit;
+                                            descIsNull = !descIsNull;
+                                            descVal = "";
+                                            // print("hello");
+                                          }
                                         });
                                       },
                                     )
                               : (!isEdit && !isSubmit)
-                                  ? IconButton(
-                                      tooltip: "Edit Description",
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: () {
-                                        setState(() {
-                                          isEdit = !isEdit;
-                                          isSubmit = true;
-                                        });
-                                      },
-                                    )
+                                  ? (descVal != "")
+                                      ? IconButton(
+                                          tooltip: "Edit Description",
+                                          icon: const Icon(Icons.edit),
+                                          onPressed: () {
+                                            descVal = descVal.toString().trim();
+                                            setState(() {
+                                              descVal =
+                                                  descVal.toString().trim();
+                                              if (descVal.length != 0) {
+                                                isEdit = !isEdit;
+                                                isSubmit = true;
+                                              }
+                                            });
+                                          },
+                                        )
+                                      : IconButton(
+                                          tooltip: "Add Description",
+                                          icon: const Icon(
+                                              CupertinoIcons.plus_app),
+                                          onPressed: () {
+                                            setState(() {
+                                              descVal =
+                                                  descVal.toString().trim();
+                                              if (descVal.length != 0) {
+                                                isEdit = !isEdit;
+                                                isSubmit = !isSubmit;
+                                              }
+                                            });
+                                          },
+                                        )
                                   : IconButton(
                                       tooltip: "Submit",
                                       icon: const Icon(
                                           CupertinoIcons.checkmark_alt_circle),
                                       onPressed: () {
-                                        isSubmit = false;
-                                        isEdit = !isEdit;
-
+                                        descVal = descVal.toString().trim();
                                         setState(() {
-                                          socket.emitWithAck(
-                                              'updateGroupDesc', {
-                                            "groupId": widget.id,
-                                            "newGroupDesc": descVal
-                                          }, ack: (data) {
-                                            setState(() {
-                                              descVal = data["description"];
+                                          descVal = descVal.toString().trim();
+                                          if (descVal.length != 0) {
+                                            isSubmit = false;
+                                            isEdit = !isEdit;
+                                            socket.emitWithAck(
+                                                'updateGroupDesc', {
+                                              "groupId": widget.id,
+                                              "newGroupDesc": descVal
+                                            }, ack: (data) {
+                                              setState(() {
+                                                descVal = data["description"];
+                                              });
                                             });
-                                          });
-                                          socket.on('exception', (data) {
-                                            print(data);
-                                          });
-                                          // print("editing");
+                                            socket.on('exception', (data) {
+                                              print(data);
+                                            });
+                                          } else {
+                                            isSubmit = false;
+                                            isEdit = !isEdit;
+                                            descVal = "";
+                                            // print("hi");
+                                          }
                                         });
                                       },
                                     )
