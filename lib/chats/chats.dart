@@ -55,9 +55,7 @@ class _ChatsState extends State<Chats> {
     socket.emitWithAck("joinRoom", {"groupId": widget.id}, ack: (payload) {
       // print(payload);
     });
-    socket.on("left", (data) {
-      // print(data);
-    });
+
     socket.on("typing", (data) {
       if (data["isTyping"] == true) {
         if (!typer.contains(data["userId"])) {
@@ -102,6 +100,11 @@ class _ChatsState extends State<Chats> {
       msgList.clear();
       typer.clear();
     }
+    socket.emitWithAck("leaveRoom", {"groupId": widget.id}, ack: (payload) {
+      print(payload);
+      socket.on("left", (data) {});
+    });
+    print("pop");
     socket.off("chatToClient");
     socket.off("chatToServer");
     socket.off("typing");
@@ -150,11 +153,11 @@ class _ChatsState extends State<Chats> {
                   child: Icon(Icons.arrow_back_ios),
                 ),
                 onTap: () {
-                  socket.emitWithAck("leaveRoom", {"groupId": widget.id},
-                      ack: (payload) {
-                    // print(payload);
-                    // print("payload");
-                  });
+                  // socket.emitWithAck("leaveRoom", {"groupId": widget.id},
+                  //     ack: (payload) {
+                  //   // print(payload);
+                  //   // print("payload");
+                  // });
                   Navigator.of(context).pop();
                 },
               ),
@@ -515,15 +518,18 @@ class _ChatsState extends State<Chats> {
                 )
                 .toList()
                 .reversed,
-            (typer.isNotEmpty)
-                ? Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
-                    child: SizedBox(
-                      width: size.width,
-                      height: 70,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
+            Align(
+              alignment: Alignment.topLeft,
+              child: AnimatedContainer(
+                padding: const EdgeInsets.fromLTRB(20, 10, 10, 0),
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeIn,
+                width: (typer.isNotEmpty) ? size.width : 0,
+                height: (typer.isNotEmpty) ? 70 : 0,
+                child: Row(
+                  children: <Widget>[
+                    (typer.isNotEmpty)
+                        ? Expanded(
                             child: Stack(
                               children: <Widget>[
                                 ...typer
@@ -564,7 +570,15 @@ class _ChatsState extends State<Chats> {
                                   child: Container(
                                     padding: const EdgeInsets.all(16),
                                     decoration: const BoxDecoration(
-                                      color: ThemeColors.lighterShadeTextLight,
+                                      color: ThemeColors
+                                          .lighterShadeTextLightForShadow,
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                          blurRadius: 4.0,
+                                          offset: Offset(0.0, 3.0),
+                                          color: Colors.grey,
+                                        )
+                                      ],
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
@@ -573,18 +587,18 @@ class _ChatsState extends State<Chats> {
                                     ),
                                     child: const JumpingDots(
                                       color: ThemeColors.mainThemeLight,
-                                      radius: 12,
+                                      radius: 8,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+                          )
+                        : const SizedBox.shrink(),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
