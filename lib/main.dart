@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/addgroup/addgroup.dart';
+import 'package:flutter_chat_app/authentication.dart';
 import 'package:flutter_chat_app/components/flutter_circular_fab.dart';
 import 'package:flutter_chat_app/homepage/homepage.dart';
 import 'package:flutter_chat_app/login.dart';
@@ -109,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
       ),
       body: (isAuth != true)
-          ? Login(
+          ? Authentication(
               onAuthStateChange: onAuthStateChange,
             )
           : GestureDetector(

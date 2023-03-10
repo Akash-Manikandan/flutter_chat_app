@@ -104,7 +104,6 @@ class _ChatsState extends State<Chats> {
       print(payload);
       socket.on("left", (data) {});
     });
-    print("pop");
     socket.off("chatToClient");
     socket.off("chatToServer");
     socket.off("typing");
