@@ -293,6 +293,23 @@ class _ChatsState extends State<Chats> {
           color: Colors.transparent,
           child: TextField(
             controller: _message,
+            autocorrect: true,
+            onSubmitted: (String value) {
+              if (kIsWeb) {
+                if (_message.text.trim().isNotEmpty) {
+                  String encMessage = realEnc(_message.text.trim(), widget.id);
+                  socket.emitWithAck(
+                      "chatToServer",
+                      {
+                        "userId": widget.userId,
+                        "groupId": widget.id,
+                        "content": encMessage
+                      },
+                      ack: (payload) {});
+                  _message.clear();
+                }
+              }
+            },
             decoration: InputDecoration(
               filled: true,
               focusedBorder: OutlineInputBorder(
@@ -478,11 +495,13 @@ class _ChatsState extends State<Chats> {
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
-                                        DateFormat.jm().format(
-                                          DateTime.parse(
-                                            e["createdAt"],
-                                          ).toLocal(),
-                                        ),
+                                        DateFormat("dd-MM-yyyy")
+                                            .add_jm()
+                                            .format(
+                                              DateTime.parse(
+                                                e["createdAt"],
+                                              ).toLocal(),
+                                            ),
                                         style: TextStyle(
                                           color: ThemeColors.mainThemeLight,
                                           fontSize: 12,
@@ -527,11 +546,13 @@ class _ChatsState extends State<Chats> {
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
-                                        DateFormat.jm().format(
-                                          DateTime.parse(
-                                            e["createdAt"],
-                                          ).toLocal(),
-                                        ),
+                                        DateFormat("dd-MM-yyyy")
+                                            .add_jm()
+                                            .format(
+                                              DateTime.parse(
+                                                e["createdAt"],
+                                              ).toLocal(),
+                                            ),
                                         style: TextStyle(
                                           color: ThemeColors.mainThemeLight,
                                           fontSize: 12,

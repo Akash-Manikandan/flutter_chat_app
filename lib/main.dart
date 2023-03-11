@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/addgroup/addgroup.dart';
 import 'package:flutter_chat_app/authentication.dart';
 import 'package:flutter_chat_app/components/flutter_circular_fab.dart';
+import 'package:flutter_chat_app/devinfo/devinfo.dart';
 import 'package:flutter_chat_app/homepage/homepage.dart';
 import 'package:flutter_chat_app/settings/settings.dart';
 import 'package:flutter_chat_app/themecolors.dart';
@@ -172,10 +173,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
                   children: <Widget>[
                     RawMaterialButton(
-                      onPressed: () async {
-                        // await removeValues();
-                        // onAuthStateChange(false);
-                        // isClicked = false;
+                      onPressed: () {
+                        fabKey.currentState?.close();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DevInfo(),
+                          ),
+                        );
                       },
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),

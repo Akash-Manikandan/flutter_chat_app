@@ -227,7 +227,7 @@ class _AddGroupState extends State<AddGroup> {
                   name: each["username"],
                   id: each["id"],
                   lastMsg: "",
-                  time: DateFormat.jm().format(
+                  time: DateFormat("dd-MM-yyyy").format(
                     DateTime.parse(
                       each["createdAt"],
                     ).toLocal(),
