@@ -56,6 +56,9 @@ class _SettingsState extends State<Settings> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: ThemeColors.topTextColorLight,
+        ),
         title: Text(
           "Settings",
           overflow: TextOverflow.fade,
@@ -63,6 +66,7 @@ class _SettingsState extends State<Settings> {
           maxLines: 1,
           style: TextStyle(
             fontFamily: ThemeColors.fontFamily,
+            color: ThemeColors.topTextColorLight,
           ),
         ),
       ),
@@ -105,7 +109,7 @@ class _SettingsState extends State<Settings> {
                                 ? const EdgeInsets.fromLTRB(0, 30, 0, 10)
                                 : (size.width > 250)
                                     ? const EdgeInsets.fromLTRB(0, 20, 0, 10)
-                                    : const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                    : const EdgeInsets.fromLTRB(0, 5, 0, 10),
                             child: Column(
                               children: <Widget>[
                                 Row(
@@ -181,11 +185,16 @@ class _SettingsState extends State<Settings> {
                   Row(
                     children: [
                       const Gap(10),
-                      Text(
-                        "What font do you want?",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: ThemeColors.fontFamily,
+                      Flexible(
+                        child: Text(
+                          "What font do you want?",
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: ThemeColors.fontFamily,
+                          ),
                         ),
                       ),
                     ],
