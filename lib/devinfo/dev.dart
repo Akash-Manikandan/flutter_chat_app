@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:simple_icons/simple_icons.dart';
 
 class Dev extends StatefulWidget {
   const Dev({
