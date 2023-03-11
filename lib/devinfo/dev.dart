@@ -28,14 +28,17 @@ class Dev extends StatefulWidget {
 }
 
 class _DevState extends State<Dev> {
-  void initState() {
-    print(widget.left);
-  }
+  // void initState() {
+  //   print(widget.left);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      height: 170,
+      height: 180,
+      width: size.width,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 12.0,
@@ -44,21 +47,20 @@ class _DevState extends State<Dev> {
         child: Column(
           children: [
             Row(
-              verticalDirection: (widget.left == 0)
-                  ? VerticalDirection.up
-                  : VerticalDirection.down,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // crossAxisAlignment: CrossAxisAlignment.center,
+              textDirection:
+                  (widget.left == 0) ? TextDirection.ltr : TextDirection.rtl,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(3),
+                  // padding: const EdgeInsets.all(3),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: ThemeColors.profileImageBg,
                     // color: ThemeColors.topTextColorLight,
                   ),
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 60,
                     backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(widget.icon
                         // 'https://api.dicebear.com/5.x/avataaars/png?seed=Ka&eyebrows=defaultNatural&eyes=default,happy&mouth=default,smile',
@@ -131,10 +133,6 @@ class _DevState extends State<Dev> {
                         });
                       },
                     ),
-                    // const Icon(
-                    //   Icons.mail_outline,
-                    //   size: 40,
-                    // ),
                     const Image(
                       image: AssetImage('../../assets/images/github.png'),
                       width: 40,
@@ -148,9 +146,10 @@ class _DevState extends State<Dev> {
                     ),
                   ],
                 ),
-                const Divider(color: Colors.black),
               ],
             ),
+            const Gap(10),
+            const Divider(),
           ],
         ),
       ),
