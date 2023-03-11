@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/themecolors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -9,7 +10,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  String gender = ThemeColors.fontFamily;
+  void savePreference(String family) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("fontFamily", family);
+  }
+
+  String fontFam = ThemeColors.fontFamily;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +37,12 @@ class _SettingsState extends State<Settings> {
             RadioListTile(
               title: const Text("Nexa"),
               value: "Nexa",
-              groupValue: gender,
+              groupValue: fontFam,
               onChanged: (value) {
                 setState(() {
-                  gender = value.toString();
-                  ThemeColors.fontFamily = gender;
+                  fontFam = value.toString();
+                  ThemeColors.fontFamily = fontFam;
+                  savePreference(fontFam);
                 });
               },
             ),
@@ -47,11 +54,12 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
               value: "Montserrat",
-              groupValue: gender,
+              groupValue: fontFam,
               onChanged: (value) {
                 setState(() {
-                  gender = value.toString();
-                  ThemeColors.fontFamily = gender;
+                  fontFam = value.toString();
+                  ThemeColors.fontFamily = fontFam;
+                  savePreference(fontFam);
                 });
               },
             ),
@@ -63,14 +71,14 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
               value: "Poppins",
-              groupValue: gender,
+              groupValue: fontFam,
               onChanged: (value) {
                 setState(() {
-                  gender = value.toString();
-                  ThemeColors.fontFamily = gender;
+                  fontFam = value.toString();
+                  ThemeColors.fontFamily = fontFam;
+                  savePreference(fontFam);
                 });
               },
-              
             ),
             RadioListTile(
               title: Text(
@@ -80,11 +88,29 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
               value: "Soban",
-              groupValue: gender,
+              groupValue: fontFam,
               onChanged: (value) {
                 setState(() {
-                  gender = value.toString();
-                  ThemeColors.fontFamily = gender;
+                  fontFam = value.toString();
+                  ThemeColors.fontFamily = fontFam;
+                  savePreference(fontFam);
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text(
+                "Fredoka",
+                style: TextStyle(
+                  fontFamily: ThemeColors.fontFamily,
+                ),
+              ),
+              value: "Fredoka",
+              groupValue: fontFam,
+              onChanged: (value) {
+                setState(() {
+                  fontFam = value.toString();
+                  ThemeColors.fontFamily = fontFam;
+                  savePreference(fontFam);
                 });
               },
             ),

@@ -78,6 +78,30 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       onAuthStateChange(false);
     }
+    String? fontFamily = prefs.getString("fontFamily");
+    if (fontFamily == null) {
+      setState(() {
+        ThemeColors.fontFamily = "Fredoka";
+      });
+    } else {
+      setState(() {
+        ThemeColors.fontFamily = fontFamily;
+      });
+    }
+  }
+
+  void fontLoder() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? fontFamily = prefs.getString("fontFamily");
+    if (fontFamily == null) {
+      setState(() {
+        ThemeColors.fontFamily = "Fredoka";
+      });
+    } else {
+      setState(() {
+        ThemeColors.fontFamily = fontFamily;
+      });
+    }
   }
 
   @override
@@ -185,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),
                       child: const Tooltip(
-                        message: "Developers\' Information",
+                        message: "Developers' Information",
                         child: Icon(
                           CupertinoIcons.text_bubble,
                           color: ThemeColors.topTextColorLight,
@@ -201,7 +225,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(
                             builder: (context) => const Settings(),
                           ),
-                        );
+                        ).then((_) {
+                          fontLoder();
+                        });
                       },
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),
