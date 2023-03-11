@@ -42,13 +42,13 @@ class _ChatsState extends State<Chats> {
     _message.addListener(_printLatestValue);
     if (kIsWeb) {
       socket = io(
-        "https://chat-nest.onrender.com",
+        "https://nestchatbackend-production.up.railway.app",
         OptionBuilder().setExtraHeaders({'senderid': widget.userId}) // optional
             .build(),
       );
     } else {
       socket = io(
-        "https://chat-nest.onrender.com",
+        "https://nestchatbackend-production.up.railway.app",
         OptionBuilder().setTransports(['websocket']).setExtraHeaders(
                 {'senderid': widget.userId}) // optional
             .build(),

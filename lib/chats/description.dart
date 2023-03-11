@@ -55,13 +55,13 @@ class _DescriptionState extends State<Description> {
   initSocket() {
     if (kIsWeb) {
       socket = IO.io(
-        "https://chat-nest.onrender.com",
+        "https://nestchatbackend-production.up.railway.app",
         IO.OptionBuilder().setExtraHeaders({'senderid': widget.uid}) // optional
             .build(),
       );
     } else {
       socket = IO.io(
-        "https://chat-nest.onrender.com",
+        "https://nestchatbackend-production.up.railway.app",
         IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
                 {'senderid': widget.uid}) // optional
             .build(),

@@ -30,7 +30,7 @@ class _AddGroupState extends State<AddGroup> {
     }
     final response = await http.get(
       Uri.parse(
-        "https://chat-nest.onrender.com/user/fetchAllUsers/$stringValue",
+        "https://nestchatbackend-production.up.railway.app/user/fetchAllUsers/$stringValue",
       ),
     );
     // if (response.statusCode == 200) {
@@ -74,14 +74,14 @@ class _AddGroupState extends State<AddGroup> {
   initSocket() {
     if (kIsWeb) {
       socket = IO.io(
-        "https://chat-nest.onrender.com",
+        "https://nestchatbackend-production.up.railway.app",
         IO.OptionBuilder()
             .setExtraHeaders({'senderid': stringValue}) // optional
             .build(),
       );
     } else {
       socket = IO.io(
-        "https://chat-nest.onrender.com",
+        "https://nestchatbackend-production.up.railway.app",
         IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
                 {'senderid': stringValue}) // optional
             .build(),
