@@ -185,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(24.0),
                       child: const Tooltip(
-                        message: "Developer Information",
+                        message: "Developers\' Information",
                         child: Icon(
                           CupertinoIcons.text_bubble,
                           color: ThemeColors.topTextColorLight,
