@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:encrypt/encrypt.dart' as encryption;
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -27,6 +28,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<dynamic> userList = [];
   bool oneselected = false;
+  String realDec(String encryptedMessage, String groupId) {
+    final key = encryption.Key.fromUtf8(groupId);
+    final iv = encryption.IV.fromBase64("AAAAAAAAAAAAAAAAAAAAAA==");
+    // print(encryptedMessage);
+    // print(key.base64);
+    // print(iv.base64);
+    final encrypter =
+        encryption.Encrypter(encryption.AES(key, mode: encryption.AESMode.cbc));
+    final decrypted = encrypter
+        .decrypt(encryption.Encrypted.from64(encryptedMessage), iv: iv);
+    return decrypted;
+  }
 
   void onChange() {
     setState(() {
@@ -268,7 +281,8 @@ class _HomePageState extends State<HomePage> {
                             id: each["id"],
                             name: each["groupName"],
                             lastMsg: (each["messages"].length != 0)
-                                ? each["messages"][0]["content"]
+                                ? realDec(
+                                    each["messages"][0]["content"], each["id"])
                                 : "",
                             time: (each["messages"].length != 0)
                                 ? DateFormat.jm().format(
