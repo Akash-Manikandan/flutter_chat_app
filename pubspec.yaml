@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.18.0
   vector_math: ^2.0.8
   jumping_dot: ^0.0.4
+  encrypt: ^5.0.1
 
   # fab_circular_menu: ^1.0.2
 

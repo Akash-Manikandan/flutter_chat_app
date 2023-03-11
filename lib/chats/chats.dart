@@ -12,6 +12,8 @@ import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
+import 'package:encrypt/encrypt.dart' as encryption;
+
 class Chats extends StatefulWidget {
   const Chats({
     super.key,
@@ -92,6 +94,33 @@ class _ChatsState extends State<Chats> {
         });
       }
     });
+  }
+
+  String realEnc(String message, String groupId) {
+    final plainText = message;
+    final key = encryption.Key.fromUtf8(groupId);
+    final iv = encryption.IV.fromBase64("AAAAAAAAAAAAAAAAAAAAAA==");
+    // print(plainText);
+    // print(key);
+    // print(iv.base64);
+    final encrypter =
+        encryption.Encrypter(encryption.AES(key, mode: encryption.AESMode.cbc));
+
+    final encrypted = encrypter.encrypt(plainText, iv: iv);
+    return encrypted.base64;
+  }
+
+  String realDec(String encryptedMessage, String groupId) {
+    final key = encryption.Key.fromUtf8(groupId);
+    final iv = encryption.IV.fromBase64("AAAAAAAAAAAAAAAAAAAAAA==");
+    // print(encryptedMessage);
+    // print(key.base64);
+    // print(iv.base64);
+    final encrypter =
+        encryption.Encrypter(encryption.AES(key, mode: encryption.AESMode.cbc));
+    final decrypted = encrypter
+        .decrypt(encryption.Encrypted.from64(encryptedMessage), iv: iv);
+    return decrypted;
   }
 
   @override
@@ -316,12 +345,14 @@ class _ChatsState extends State<Chats> {
                   child: GestureDetector(
                     onTap: () {
                       if (_message.text.trim().isNotEmpty) {
+                        String encMessage =
+                            realEnc(_message.text.trim(), widget.id);
                         socket.emitWithAck(
                             "chatToServer",
                             {
                               "userId": widget.userId,
                               "groupId": widget.id,
-                              "content": _message.text.trim()
+                              "content": encMessage
                             },
                             ack: (payload) {});
                         _message.clear();
@@ -429,7 +460,7 @@ class _ChatsState extends State<Chats> {
                                             ),
                                             const Gap(10),
                                             SelectableText(
-                                              e["content"],
+                                              realDec(e["content"], widget.id),
                                               style: TextStyle(
                                                 color:
                                                     ThemeColors.mainThemeLight,
@@ -482,7 +513,7 @@ class _ChatsState extends State<Chats> {
                                           ),
                                         ),
                                         child: SelectableText(
-                                          e["content"],
+                                          realDec(e["content"], widget.id),
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: ThemeColors.oppositeTextBox,
