@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:encrypt/encrypt.dart' as encryption;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -112,9 +113,22 @@ class _HomePageState extends State<HomePage> {
     socket.on('exception', (data) {
       print(data);
     });
+    socket.onConnectTimeout((data) {
+      print("Timed Out");
+      shw("Timeout Please Check Connection");
+    });
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
     socket.onError((err) => print(err));
+  }
+
+  void shw(String warn) {
+    AnimatedSnackBar.material(
+      warn,
+      type: AnimatedSnackBarType.warning,
+      mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+      desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
+    ).show(context);
   }
 
   updateLastSent(String grpId, String msg, String time, bool read) {
