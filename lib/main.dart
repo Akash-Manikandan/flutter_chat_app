@@ -8,6 +8,7 @@ import 'package:flutter_chat_app/homepage/homepage.dart';
 import 'package:flutter_chat_app/settings/settings.dart';
 import 'package:flutter_chat_app/themecolors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,18 @@ class MyApp extends StatelessWidget {
           backgroundColor: ThemeColors.mainThemeLight,
         ),
       ),
-      home: const MyHomePage(),
+      // home: const MyHomePage(),
+      home: AnimatedSplashScreen(
+        duration: 1000,
+        splashIconSize: 300,
+        splashTransition: SplashTransition.scaleTransition,
+        // pageTransitionType: PageTransitionType.topToBottomPop,
+        centered: true,
+        splash: const Image(
+          image: AssetImage('assets/images/logo.png'),
+        ),
+        nextScreen: const MyHomePage(),
+      ),
     );
   }
 }

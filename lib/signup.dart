@@ -26,8 +26,7 @@ addStringToSF(String info) async {
 
 Future<dynamic> loginReq(String username, String password) async {
   final response = await http.post(
-    Uri.parse(
-        'https://nestchatbackend-production.up.railway.app/user/signupUser'),
+    Uri.parse('https://chat-nest.onrender.com/user/signupUser'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
