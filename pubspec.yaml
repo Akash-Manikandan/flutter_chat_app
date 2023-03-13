@@ -94,9 +94,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: SFProDisplay
-      fonts:
-        - asset: assets/fonts/SFProDisplay-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
     - family: Nexa
@@ -105,12 +102,6 @@ flutter:
     - family: Sabon
       fonts:
         - asset: assets/fonts/Sabon.ttf
-    - family: Freight
-      fonts:
-        - asset: assets/fonts/Freight-Regular.ttf
-    - family: ProzaLibre
-      fonts:
-        - asset: assets/fonts/ProzaLibre-Regular.ttf
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
@@ -119,14 +110,33 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
-    - family: Raleway
-      fonts:
-        - asset: assets/fonts/Raleway-Medium.ttf
     - family: Fredoka
       fonts:
         - asset: assets/fonts/Fredoka-Regular.ttf
         - asset: assets/fonts/Fredoka-SemiBold.ttf
           weight: 600
+    - family: CascadiaCode
+      fonts:
+        - asset: assets/fonts/CascadiaCode-Regular.ttf
+        - asset: assets/fonts/CascadiaCode-Bold.ttf
+          weight: 600
+    - family: Consolasligaturizedv2
+      fonts:
+        - asset: assets/fonts/Consolasligaturizedv2.ttf
+        - asset: assets/fonts/Consolasligaturizedv2-Bold.ttf
+          weight: 600
+    - family: Exo2
+      fonts:
+        - asset: assets/fonts/Exo2-Regular.otf
+    - family: FantasqueSansMono
+      fonts:
+        - asset: assets/fonts/FantasqueSansMono-Regular.ttf
+    - family: Gintronic
+      fonts:
+        - asset: assets/fonts/Gintronic.ttf
+    - family: PragmataPro
+      fonts:
+        - asset: assets/fonts/PragmataPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

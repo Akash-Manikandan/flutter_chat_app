@@ -202,10 +202,10 @@ class _SettingsState extends State<Settings> {
                   const Gap(5),
                   const Divider(),
                   RadioListTile(
-                    title: Text(
+                    title: const Text(
                       "Nexa",
                       style: TextStyle(
-                        fontFamily: ThemeColors.fontFamily,
+                        fontFamily: "Nexa",
                       ),
                     ),
                     value: "Nexa",
@@ -215,10 +215,10 @@ class _SettingsState extends State<Settings> {
                     },
                   ),
                   RadioListTile(
-                    title: Text(
+                    title: const Text(
                       "Montserrat",
                       style: TextStyle(
-                        fontFamily: ThemeColors.fontFamily,
+                        fontFamily: "Montserrat",
                       ),
                     ),
                     value: "Montserrat",
@@ -228,10 +228,10 @@ class _SettingsState extends State<Settings> {
                     },
                   ),
                   RadioListTile(
-                    title: Text(
+                    title: const Text(
                       "Poppins",
                       style: TextStyle(
-                        fontFamily: ThemeColors.fontFamily,
+                        fontFamily: "Poppins",
                       ),
                     ),
                     value: "Poppins",
@@ -241,10 +241,10 @@ class _SettingsState extends State<Settings> {
                     },
                   ),
                   RadioListTile(
-                    title: Text(
+                    title: const Text(
                       "Soban",
                       style: TextStyle(
-                        fontFamily: ThemeColors.fontFamily,
+                        fontFamily: "Soban",
                       ),
                     ),
                     value: "Soban",
@@ -254,13 +254,91 @@ class _SettingsState extends State<Settings> {
                     },
                   ),
                   RadioListTile(
-                    title: Text(
+                    title: const Text(
                       "Fredoka",
                       style: TextStyle(
-                        fontFamily: ThemeColors.fontFamily,
+                        fontFamily: "Fredoka",
                       ),
                     ),
                     value: "Fredoka",
+                    groupValue: fontFam,
+                    onChanged: (value) {
+                      changeFont(value.toString());
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text(
+                      "CascadiaCode",
+                      style: TextStyle(
+                        fontFamily: "CascadiaCode",
+                      ),
+                    ),
+                    value: "CascadiaCode",
+                    groupValue: fontFam,
+                    onChanged: (value) {
+                      changeFont(value.toString());
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text(
+                      "Consolasligaturized",
+                      style: TextStyle(
+                        fontFamily: "Consolasligaturizedv2",
+                      ),
+                    ),
+                    value: "Consolasligaturizedv2",
+                    groupValue: fontFam,
+                    onChanged: (value) {
+                      changeFont(value.toString());
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text(
+                      "Exo2",
+                      style: TextStyle(
+                        fontFamily: "Exo2",
+                      ),
+                    ),
+                    value: "Exo2",
+                    groupValue: fontFam,
+                    onChanged: (value) {
+                      changeFont(value.toString());
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text(
+                      "FantasqueSansMono",
+                      style: TextStyle(
+                        fontFamily: "FantasqueSansMono",
+                      ),
+                    ),
+                    value: "FantasqueSansMono",
+                    groupValue: fontFam,
+                    onChanged: (value) {
+                      changeFont(value.toString());
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text(
+                      "Gintronic",
+                      style: TextStyle(
+                        fontFamily: "Gintronic",
+                      ),
+                    ),
+                    value: "Gintronic",
+                    groupValue: fontFam,
+                    onChanged: (value) {
+                      changeFont(value.toString());
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text(
+                      "PragmataPro",
+                      style: TextStyle(
+                        fontFamily: "PragmataPro",
+                      ),
+                    ),
+                    value: "PragmataPro",
                     groupValue: fontFam,
                     onChanged: (value) {
                       changeFont(value.toString());
