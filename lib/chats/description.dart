@@ -11,8 +11,12 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class Description extends StatefulWidget {
-  const Description(
-      {super.key, required this.id, required this.name, required this.uid,});
+  const Description({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.uid,
+  });
   final String id;
   final String name;
   final String? uid;
@@ -82,57 +86,29 @@ class _DescriptionState extends State<Description> {
       });
     });
     socket.emitWithAck('updateGroupDesc', {"groupId": widget.id}, ack: (data) {
-      // print(data);
       if (mounted) {
         setState(() {
-          // descVal = data["description"] == null ? "NULL" : data["description"];
           descVal = data["description"] ?? "";
           descController.text = descVal;
 
-          // print(descVal);
           if (descVal != null) {
             descIsNull = false;
-            // print(descIsNull);
           }
         });
       }
     });
 
-    // socket.on('updateGroupDesc', (args:any) => {});
     socket.onDisconnect((_) => print('Connection Disconnection'));
     socket.onConnectError((err) => print(err));
     socket.onError((err) => print(err));
   }
 
   List<dynamic> userList = [];
-  // {
-  //   "id": "Karthi",
-  //   "name": "Karthi",
-  //   "message": "Hello, Good Morning",
-  //   "time": "11:47 PM",
-  //   "count": 4,
-  // },
-  // {
-  //   "id": "Aishwarya",
-  //   "name": "Aishwarya",
-  //   "message": "Hello, Morning",
-  //   "time": "11:47 PM",
-  //   "count": 7,
-  // },
-  // {
-  //   "id": "Akash",
-  //   "name": "Akash",
-  //   "message": "Bye",
-  //   "time": "11:47 PM",
-  //   "count": 4,
-  // },
-  // ];
 
   void updatingDesc() {
     socket.emitWithAck(
         'updateGroupDesc', {"groupId": widget.id, "newGroupDesc": descVal},
         ack: (data) {
-      // print(data);
       setState(() {
         descVal = data["description"];
       });
@@ -297,7 +273,6 @@ class _DescriptionState extends State<Description> {
                                             isEdit = !isEdit;
                                             descIsNull = !descIsNull;
                                             descVal = "";
-                                            // print("hello");
                                           });
                                         }
                                       },
@@ -355,7 +330,6 @@ class _DescriptionState extends State<Description> {
                                             isEdit = !isEdit;
                                             descIsNull = true;
                                             descVal = "";
-                                            // print("hi2");
                                           });
                                         }
                                       },
