@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/addgroup/addgroup.dart';
@@ -5,12 +8,21 @@ import 'package:flutter_chat_app/authentication.dart';
 import 'package:flutter_chat_app/components/flutter_circular_fab.dart';
 import 'package:flutter_chat_app/devinfo/devinfo.dart';
 import 'package:flutter_chat_app/homepage/homepage.dart';
-import 'package:flutter_chat_app/settings/settings.dart';
+import 'package:flutter_chat_app/settings/settings1.dart';
 import 'package:flutter_chat_app/themecolors.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
-void main() {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage msg) async {
+  print("handling a background msg: ${msg.messageId}");
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }
 
@@ -72,6 +84,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String? mtoken = " ";
   bool isClicked = false;
   final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
   bool isAuth = false;
@@ -119,7 +132,100 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   initState() {
     super.initState();
+    requestPermission();
+    getToken();
     getAsync();
+    initinfo();
+  }
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  initinfo() {
+    var androidInitialize =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationsSettings =
+        InitializationSettings(android: androidInitialize);
+    flutterLocalNotificationsPlugin.initialize(initializationsSettings,
+        onDidReceiveNotificationResponse: (detail) async {
+      try {
+        if (detail != null) {
+        } else {}
+      } catch (e) {}
+      return;
+    });
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage msg) async {
+        print("onmessagee***************************");
+        print(
+            "onMessage: ${msg.notification?.title}/${msg.notification?.body}");
+        BigTextStyleInformation bigTextStyleInformation =
+            BigTextStyleInformation(
+          msg.notification!.body.toString(),
+          htmlFormatBigText: true,
+          contentTitle: msg.notification!.title.toString(),
+          htmlFormatContentTitle: true,
+        );
+        AndroidNotificationDetails androidPlatformChannelSpecifics =
+            AndroidNotificationDetails(
+          'dbfood',
+          'dbfood',
+          importance: Importance.high,
+          styleInformation: bigTextStyleInformation,
+          priority: Priority.high,
+          playSound: true,
+        );
+        NotificationDetails platformChannelSpecifics =
+            NotificationDetails(android: androidPlatformChannelSpecifics);
+        await flutterLocalNotificationsPlugin.show(0, msg.notification?.title,
+            msg.notification?.body, platformChannelSpecifics,
+            payload: msg.data['body']);
+      },
+    );
+  }
+
+  void getToken() async {
+    await FirebaseMessaging.instance.getToken().then((token) async {
+      setState(() {
+        mtoken = token;
+        print("My token is $mtoken");
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? stringVal = prefs.getString('userId');
+      if (stringVal != null) {
+        saveToken(token!, stringVal);
+      }
+    });
+  }
+
+  void saveToken(String token, String stringVal) async {
+    final tok = <String, String>{
+      "token": token,
+    };
+    await FirebaseFirestore.instance
+        .collection("UserTokens")
+        .doc(stringVal)
+        .set(tok);
+  }
+
+  void requestPermission() async {
+    FirebaseMessaging msg = FirebaseMessaging.instance;
+    NotificationSettings settings = await msg.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print("User granted Permission");
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print("User granted provisional permission");
+    } else {
+      print("User declined");
+    }
   }
 
   getAsync() async {
@@ -235,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Settings(),
+                            builder: (context) => const Settings1(),
                           ),
                         ).then((_) {
                           fontLoder();
