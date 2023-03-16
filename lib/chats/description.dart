@@ -247,7 +247,6 @@ class _DescriptionState extends State<Description> {
                                       tooltip: "Add Description",
                                       icon: const Icon(CupertinoIcons.plus_app),
                                       onPressed: () {
-                                        print("hello");
                                         setState(() {
                                           isEdit = !isEdit;
                                           isSubmit = !isSubmit;
