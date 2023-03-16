@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:readmore/readmore.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class Description extends StatefulWidget {
   const Description(
@@ -29,6 +30,7 @@ class _DescriptionState extends State<Description> {
   bool descIsNull = true;
   bool isEdit = false;
   bool isSubmit = false;
+  String errorMsg = "Description cannot be null";
   late ScrollController _scrollController;
   @override
   void initState() {
@@ -255,6 +257,7 @@ class _DescriptionState extends State<Description> {
                                       tooltip: "Add Description",
                                       icon: const Icon(CupertinoIcons.plus_app),
                                       onPressed: () {
+                                        print("hello");
                                         setState(() {
                                           isEdit = !isEdit;
                                           isSubmit = !isSubmit;
@@ -273,7 +276,7 @@ class _DescriptionState extends State<Description> {
                                         descVal = descVal.toString().trim();
                                         setState(() {
                                           descVal = descVal.toString().trim();
-                                          if (descVal.length != 0) {
+                                          if (descVal.length != "") {
                                             isSubmit = false;
                                             isEdit = !isEdit;
                                             descIsNull = !descIsNull;
@@ -322,12 +325,19 @@ class _DescriptionState extends State<Description> {
                                           icon: const Icon(
                                               CupertinoIcons.plus_app),
                                           onPressed: () {
+                                            print("hi");
                                             setState(() {
                                               descVal =
                                                   descVal.toString().trim();
-                                              if (descVal.length != 0) {
+                                              if (descVal == "") {
                                                 isEdit = !isEdit;
                                                 isSubmit = !isSubmit;
+                                              } else {
+                                                AnimatedSnackBar.material(
+                                                  errorMsg,
+                                                  type: AnimatedSnackBarType
+                                                      .error,
+                                                ).show(context);
                                               }
                                             });
                                           },
@@ -340,7 +350,7 @@ class _DescriptionState extends State<Description> {
                                         descVal = descVal.toString().trim();
                                         setState(() {
                                           descVal = descVal.toString().trim();
-                                          if (descVal.length != 0) {
+                                          if (descVal.length != "") {
                                             isSubmit = false;
                                             isEdit = !isEdit;
                                             socket.emitWithAck(
@@ -358,8 +368,9 @@ class _DescriptionState extends State<Description> {
                                           } else {
                                             isSubmit = false;
                                             isEdit = !isEdit;
+                                            descIsNull = true;
                                             descVal = "";
-                                            // print("hi");
+                                            print("hi2");
                                           }
                                         });
                                       },
