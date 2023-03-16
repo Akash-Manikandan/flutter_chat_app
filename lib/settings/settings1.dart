@@ -8,14 +8,14 @@ import 'package:jdenticon_dart/jdenticon_dart.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class Settings1 extends StatefulWidget {
+  const Settings1({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<Settings1> createState() => _Settings1State();
 }
 
-class _SettingsState extends State<Settings> {
+class _Settings1State extends State<Settings1> {
   void savePreference(String family) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("fontFamily", family);

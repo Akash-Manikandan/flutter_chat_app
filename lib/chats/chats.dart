@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,12 @@ class _ChatsState extends State<Chats> {
         });
       }
     });
+    socket.emitWithAck('fetchUsers', {"groupId": widget.id}, ack: (data) async {
+      // print(data["user"][0]);
+      userList = data["user"];
+      // print(userList);
+      assignTokens(userList);
+    });
   }
 
   String realEnc(String message, String groupId) {
@@ -154,6 +161,17 @@ class _ChatsState extends State<Chats> {
         {"groupId": widget.id, "userId": widget.userId, "isTyping": false},
       );
     });
+  }
+
+  List<dynamic> userList = [];
+  Future<void> assignTokens(userL) async {
+    print(userL);
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection("UserTokens")
+        .doc("63bae87aeb66b1294d484bf9")
+        .get();
+    String tok = snap['token'];
+    print(tok);
   }
 
   @override
