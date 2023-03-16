@@ -650,6 +650,63 @@ class _ChatsState extends State<Chats> {
                 ),
               ),
             ),
+            const Gap(5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: ThemeColors.profileImageBg,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    shape: BoxShape.rectangle,
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        blurRadius: 35.0,
+                        offset: const Offset(-18.0, 1.0),
+                        color: Colors.grey.shade400,
+                      )
+                    ],
+                  ),
+                  padding: const EdgeInsets.fromLTRB(5, 11, 3, 11),
+                  child: const Icon(
+                    Icons.lock,
+                    size: 12,
+                    color: ThemeColors.mainThemeLight,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: ThemeColors.profileImageBg,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    shape: BoxShape.rectangle,
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        blurRadius: 35.0,
+                        offset: const Offset(20.0, 1.0),
+                        color: Colors.grey.shade400,
+                      )
+                    ],
+                  ),
+                  padding: const EdgeInsets.fromLTRB(3, 10, 5, 10),
+                  child: Text(
+                    "End-to-End Encrypted",
+                    style: TextStyle(
+                      color: ThemeColors.mainThemeLight,
+                      fontSize: 12,
+                      fontFamily: ThemeColors.fontFamily,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Gap(10),
           ],
         ),
       ),
