@@ -12,7 +12,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class Description extends StatefulWidget {
   const Description(
-      {super.key, required this.id, required this.name, required this.uid});
+      {super.key, required this.id, required this.name, required this.uid,});
   final String id;
   final String name;
   final String? uid;
@@ -127,6 +127,20 @@ class _DescriptionState extends State<Description> {
   //   "count": 4,
   // },
   // ];
+
+  void updatingDesc() {
+    socket.emitWithAck(
+        'updateGroupDesc', {"groupId": widget.id, "newGroupDesc": descVal},
+        ack: (data) {
+      // print(data);
+      setState(() {
+        descVal = data["description"];
+      });
+    });
+    socket.on('exception', (data) {
+      print(data);
+    });
+  }
 
   TextEditingController descController = TextEditingController();
 
@@ -269,38 +283,23 @@ class _DescriptionState extends State<Description> {
                                       icon: const Icon(
                                           CupertinoIcons.checkmark_alt_circle),
                                       onPressed: () {
-                                        // descController.text = descController
-                                        //     .text
-                                        //     .toString()
-                                        //     .trim();
                                         descVal = descVal.toString().trim();
-                                        setState(() {
-                                          descVal = descVal.toString().trim();
-                                          if (descVal.length != "") {
+                                        if (descVal.length != "") {
+                                          setState(() {
                                             isSubmit = false;
                                             isEdit = !isEdit;
                                             descIsNull = !descIsNull;
-                                            socket.emitWithAck(
-                                                'updateGroupDesc', {
-                                              "groupId": widget.id,
-                                              "newGroupDesc": descVal
-                                            }, ack: (data) {
-                                              // print(data);
-                                              setState(() {
-                                                descVal = data["description"];
-                                              });
-                                            });
-                                            socket.on('exception', (data) {
-                                              print(data);
-                                            });
-                                          } else {
+                                            updatingDesc();
+                                          });
+                                        } else {
+                                          setState(() {
                                             isSubmit = false;
                                             isEdit = !isEdit;
                                             descIsNull = !descIsNull;
                                             descVal = "";
                                             // print("hello");
-                                          }
-                                        });
+                                          });
+                                        }
                                       },
                                     )
                               : (!isEdit && !isSubmit)
@@ -310,14 +309,12 @@ class _DescriptionState extends State<Description> {
                                           icon: const Icon(Icons.edit),
                                           onPressed: () {
                                             descVal = descVal.toString().trim();
-                                            setState(() {
-                                              descVal =
-                                                  descVal.toString().trim();
-                                              if (descVal.length != 0) {
+                                            if (descVal.length != 0) {
+                                              setState(() {
                                                 isEdit = !isEdit;
                                                 isSubmit = true;
-                                              }
-                                            });
+                                              });
+                                            }
                                           },
                                         )
                                       : IconButton(
@@ -325,21 +322,19 @@ class _DescriptionState extends State<Description> {
                                           icon: const Icon(
                                               CupertinoIcons.plus_app),
                                           onPressed: () {
-                                            print("hi");
-                                            setState(() {
-                                              descVal =
-                                                  descVal.toString().trim();
-                                              if (descVal == "") {
+                                            descVal = descVal.toString().trim();
+                                            if (descVal == "") {
+                                              setState(() {
                                                 isEdit = !isEdit;
                                                 isSubmit = !isSubmit;
-                                              } else {
-                                                AnimatedSnackBar.material(
-                                                  errorMsg,
-                                                  type: AnimatedSnackBarType
-                                                      .error,
-                                                ).show(context);
-                                              }
-                                            });
+                                              });
+                                            } else {
+                                              AnimatedSnackBar.material(
+                                                errorMsg,
+                                                type:
+                                                    AnimatedSnackBarType.error,
+                                              ).show(context);
+                                            }
                                           },
                                         )
                                   : IconButton(
@@ -348,31 +343,21 @@ class _DescriptionState extends State<Description> {
                                           CupertinoIcons.checkmark_alt_circle),
                                       onPressed: () {
                                         descVal = descVal.toString().trim();
-                                        setState(() {
-                                          descVal = descVal.toString().trim();
-                                          if (descVal.length != "") {
+                                        if (descVal.length != "") {
+                                          setState(() {
                                             isSubmit = false;
                                             isEdit = !isEdit;
-                                            socket.emitWithAck(
-                                                'updateGroupDesc', {
-                                              "groupId": widget.id,
-                                              "newGroupDesc": descVal
-                                            }, ack: (data) {
-                                              setState(() {
-                                                descVal = data["description"];
-                                              });
-                                            });
-                                            socket.on('exception', (data) {
-                                              print(data);
-                                            });
-                                          } else {
+                                          });
+                                          updatingDesc();
+                                        } else {
+                                          setState(() {
                                             isSubmit = false;
                                             isEdit = !isEdit;
                                             descIsNull = true;
                                             descVal = "";
-                                            print("hi2");
-                                          }
-                                        });
+                                            // print("hi2");
+                                          });
+                                        }
                                       },
                                     )
                         ],
