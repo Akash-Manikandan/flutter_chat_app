@@ -24,7 +24,7 @@ class _DevInfoState extends State<DevInfo> {
         "https://api.dicebear.com/5.x/avataaars/png?seed=Mimi&eyebrows=defaultNatural&eyes=default,happy&mouth=default,smile",
         "https://api.dicebear.com/5.x/avataaars/png?seed=Mim&eyebrows=defaultNatural&eyes=default,happy&mouth=default,smile"
       ],
-      "role": "Frontend Developer",
+      "role": "Full Stack Developer",
       "mail": "smt@gmail.com",
       "github": "gh",
       "linkedIn": "li",
@@ -36,7 +36,7 @@ class _DevInfoState extends State<DevInfo> {
         "https://api.dicebear.com/5.x/avataaars/png?seed=Karthik&eyebrows=defaultNatural&eyes=default,happy&mouth=default,smile",
         "https://api.dicebear.com/5.x/avataaars/png?seed=Aish&eyebrows=flatNatural,defaultNatural&eyes=default,happy&facialHairProbability=5&mouth=default,smile"
       ],
-      "role": "Backend Developer",
+      "role": "Full Stack Developer",
       "mail": "smt@gmail.com",
       "github": "gh",
       "linkedIn": "li",
@@ -48,13 +48,13 @@ class _DevInfoState extends State<DevInfo> {
         "https://api.dicebear.com/5.x/avataaars/png?seed=Pumpkin&eyebrows=defaultNatural&eyes=default,happy&mouth=default,smile",
         "https://api.dicebear.com/5.x/avataaars/png?seed=Karthikeyan&eyebrows=defaultNatural&eyes=default,happy&mouth=default,smile"
       ],
-      "role": "Backend Developer",
+      "role": "Full Stack Developer",
       "mail": "smt@gmail.com",
       "github": "gh",
       "linkedIn": "li",
     },
   ];
-  int randomNumber = Random().nextInt(2);
+  int randomNumber = Random().nextInt(3);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,32 @@ class _DevInfoState extends State<DevInfo> {
                 );
               },
             ).toList(),
+            // Stack(
+            //   alignment: Alignment.bottomCenter,
+            //   children: [
+            //     Positioned(
+            //       child: Container(child: Text("data")),
+            //       bottom: 0,
+            //     ),
+            //   ],
+            // )
           ],
+        ),
+      ),
+      // bottomNavigationBar: Container(child: Text("data")),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.copyright),
+              Gap(5),
+              Text("core_dumped"),
+            ],
+          ),
         ),
       ),
     );
